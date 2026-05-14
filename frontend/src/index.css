@@ -1,26 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
 :root {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #0a0a0c;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --primary: #6366f1;
+  --primary-glow: rgba(99, 102, 241, 0.5);
+  --bg-dark: #030712;
+  --card-bg: rgba(17, 24, 39, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --text-main: #f8fafc;
+  --text-dim: #94a3b8;
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  padding: 0;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  overflow-x: hidden;
 }
 
-* {
-  box-sizing: border-box;
+/* Background Animation */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% -20%, #1e1b4b 0%, transparent 50%),
+              radial-gradient(circle at 0% 100%, #0f172a 0%, transparent 40%);
+  z-index: -1;
+}
+
+.aura-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.glass {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+}
+
+/* Ticker */
+.purchase-ticker {
+  height: 50px;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  padding: 0 25px;
+  overflow: hidden;
+}
+
+.ticker-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.online-count {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #10b981;
+}
+
+.pulse-dot {
+  width: 6px;
+  height: 6px;
+  background: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #10b981;
+  animation: pulse 2s infinite;
+}
+
+/* Hero Section */
+.hero-carousel {
+  margin: 40px 0;
+}
+
+.carousel-card {
+  display: flex;
+  padding: 50px;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 400px;
+  background: linear-gradient(135deg, rgba(30, 27, 75, 0.4) 0%, rgba(3, 7, 18, 0.6) 100%);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.hero-info h2 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin: 15px 0;
+  line-height: 1;
+  background: linear-gradient(to right, #fff, #94a3b8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.current-price {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.buy-hero-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  border-radius: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 10px 25px var(--primary-glow);
+  transition: transform 0.2s;
+}
+
+.buy-hero-btn:hover {
+  transform: translateY(-3px);
+}
+
+.hero-image img {
+  width: 100%;
+  max-width: 450px;
+  filter: drop-shadow(0 20px 50px rgba(0,0,0,0.5));
+}
+
+/* Product Grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  padding-bottom: 100px;
+}
+
+.p-card {
+  padding: 25px;
+  transition: all 0.3s ease;
+}
+
+.p-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-5px);
+}
+
+.p-price {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.p-buy {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--glass-border);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.p-buy:hover {
+  background: var(--primary);
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.5; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  .carousel-card { flex-direction: column; padding: 30px; text-align: center; }
+  .hero-info { max-width: 100%; }
+  .hero-info h2 { font-size: 2.2rem; }
 }
