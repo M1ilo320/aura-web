@@ -17,7 +17,7 @@ const ShopView = () => {
 
   useEffect(() => {
     // Tutaj wpisz swój URL z Rendera
-    const BACKEND_URL = "https://aura-sklep.onrender.com";
+    const BACKEND_URL = "https://aura-api-5tbi.onrender.com";
     
     fetch(`${BACKEND_URL}/api/shop/${slug}`)
       .then(res => res.json())
