@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { ShoppingCart, User, Users, ChevronLeft, ChevronRight, Zap, Shield, Star } from 'lucide-react';
+import { ShoppingCart, User, Users, ChevronLeft, ChevronRight, Zap, Shield, Star, Crown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ShopView = () => {
@@ -16,7 +16,6 @@ const ShopView = () => {
   ]);
 
   useEffect(() => {
-    // Tutaj wpisz swój URL z Rendera
     const BACKEND_URL = "https://aura-api-5tbi.onrender.com";
     
     fetch(`${BACKEND_URL}/api/shop/${slug}`)
@@ -24,73 +23,84 @@ const ShopView = () => {
       .then(data => {
         setShop(data.shop);
         setProducts(data.products);
-        document.documentElement.style.setProperty('--primary', data.shop.accent_color || '#3b82f6');
+        if (data.shop.accent_color) {
+            document.documentElement.style.setProperty('--primary', data.shop.accent_color);
+            document.documentElement.style.setProperty('--primary-glow', data.shop.accent_color + '80');
+        }
         setLoading(false);
       })
       .catch(err => console.error(err));
   }, [slug]);
 
-  if (loading) return <div className="full-loader">Wczytywanie Twojego Sklepu...</div>;
+  if (loading) return <div className="loading-container"><h1>AuraStore</h1><div className="loader"></div></div>;
   if (!shop) return <div className="error-screen">Sklep nie istnieje.</div>;
 
   return (
     <div className="aura-wrapper">
-      {/* 1. TOP TICKER (Ostatnie zakupy) */}
+      {/* HEADER / TICKER */}
       <div className="purchase-ticker glass">
         <div className="ticker-content">
           <div className="online-count">
             <div className="pulse-dot"></div>
-            <span><b>47</b> GRACZY ONLINE</span>
+            <span>47 GRACZY ONLINE</span>
           </div>
           <div className="ticker-items">
-            {purchases.concat(purchases).map((p, i) => (
-              <div key={i} className="ticker-card">
-                <span className="user">{p.user}</span>
-                <span className="item">{p.item}</span>
-              </div>
-            ))}
+            <AnimatePresence>
+              {purchases.map((p, i) => (
+                <motion.div 
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    key={i} 
+                    className="ticker-card"
+                >
+                  <span className="user">{p.user}</span>
+                  <span className="item">{p.item}</span>
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
-          <button className="steam-btn">Zaloguj na Steam</button>
+          <button className="steam-btn">ZALOGUJ PRZEZ STEAM</button>
         </div>
       </div>
 
-      {/* 2. LOGO BAR */}
-      <div className="logo-bar">
-        <motion.div initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="main-logo">
-           {shop.logo_url ? <img src={shop.logo_url} alt="logo" /> : <div className="placeholder-logo">A</div>}
-           <h1>{shop.name}</h1>
-        </motion.div>
-      </div>
+      {/* SHOP NAME */}
+      <header className="shop-header">
+        <motion.h1 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+        >
+            {shop.name}
+        </motion.h1>
+      </header>
 
-      {/* 3. HERO CAROUSEL */}
+      {/* HERO SECTION */}
       <section className="hero-carousel">
         <div className="carousel-card glass">
            <div className="hero-info">
-             <span className="badge">POLECANE</span>
-             <h2>ZESTAW POCZĄTKUJĄCEGO</h2>
-             <p>Zestaw zawiera: Rangę Support, 1200 monet oraz unikalny pojazd.</p>
+             <div className="badge"><Star size={12} fill="currentColor"/> POLECANE</div>
+             <h2>ZESTAW STARTER</h2>
+             <p>Wszystko czego potrzebujesz na start: Monety, Unikalne Auto oraz Ranga VIP na 30 dni.</p>
              <div className="hero-price">
-               <span className="current">49,99 zł</span>
-               <span className="old">90,00 zł</span>
-               <button className="buy-hero-btn">KUP TERAZ</button>
+               <div className="price-tag">
+                 <span className="current-price">49.99 PLN</span>
+                 <span className="old-price">89.00 PLN</span>
+               </div>
+               <button className="buy-hero-btn">BIORĘ TO!</button>
              </div>
            </div>
            <div className="hero-image">
-             <img src="https://i.ibb.co/hR4f7pB/t-support.png" alt="Featured" />
-             <div className="glow-effect"></div>
+             <img src="https://cdna.artstation.com/p/assets/images/images/034/136/836/large/lucas-f-neon-box.jpg?1611270213" alt="Starter Pack" />
            </div>
         </div>
       </section>
 
-      {/* 4. PRODUCT GRID */}
-      <main className="shop-grid-container">
-        <div className="grid-header">
-           <div className="categories">
-             <button className="cat-btn active">WSZYSTKIE</button>
-             <button className="cat-btn">RANGI</button>
-             <button className="cat-btn">POJAZDY</button>
-             <button className="cat-btn">UNBANY</button>
-           </div>
+      {/* PRODUCTS */}
+      <section className="shop-content">
+        <div className="category-bar">
+            <button className="cat-btn active">WSZYSTKO</button>
+            <button className="cat-btn">RANGI</button>
+            <button className="cat-btn">WALUTA</button>
+            <button className="cat-btn">INNE</button>
         </div>
 
         <div className="product-grid">
@@ -98,88 +108,46 @@ const ShopView = () => {
             <motion.div 
               key={p.id} 
               className="p-card glass"
-              whileHover={{ y: -10 }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
             >
-              <div className="p-img">
-                {p.popular && <div className="p-badge">OKAZJA</div>}
+              <div className="p-header">
+                {p.item_type === 'rangi' ? <Crown className="p-icon" size={40}/> : <Zap className="p-icon" size={40}/>}
+                {p.popular && <span className="p-popular">BESTSELLER</span>}
               </div>
-              <div className="p-details">
-                <span className="p-cat">{p.category}</span>
+              <div className="p-body">
                 <h3>{p.name}</h3>
                 <p>{p.description}</p>
-                <div className="p-footer">
-                   <span className="p-price">{p.price} zł</span>
-                   <button className="p-buy"><ShoppingCart size={18}/> KUP</button>
-                </div>
+              </div>
+              <div className="p-footer">
+                 <span className="p-price">{p.price} PLN</span>
+                 <button className="p-buy">DODAJ DO KOSZYKA</button>
               </div>
             </motion.div>
           ))}
         </div>
-      </main>
+      </section>
 
-      <style jsx>{`
-        .aura-wrapper { background: #0b0d14; color: white; min-height: 100vh; font-family: 'Inter', sans-serif; }
-        .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); }
+      <style dangerouslySetInnerHTML={{ __html: `
+        .loading-container { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; }
+        .loader { width: 50px; height: 50px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
         
-        /* TICKER */
-        .purchase-ticker { height: 60px; position: sticky; top: 0; z-index: 1000; display: flex; align-items: center; padding: 0 2rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .ticker-content { max-width: 1400px; margin: 0 auto; width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
-        .online-count { display: flex; align-items: center; gap: 10px; font-size: 0.75rem; color: #94a3b8; min-width: 150px; }
-        .pulse-dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite; }
+        .shop-header { text-align: center; margin: 40px 0; }
+        .shop-header h1 { font-size: 3rem; font-weight: 900; letter-spacing: -1px; text-transform: uppercase; }
         
-        .ticker-items { flex: 1; overflow: hidden; display: flex; gap: 2rem; mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
-        .ticker-card { display: flex; gap: 8px; font-size: 0.8rem; white-space: nowrap; background: rgba(255,255,255,0.02); padding: 5px 15px; border-radius: 5px; }
-        .ticker-card .user { font-weight: 800; }
-        .ticker-card .item { color: var(--primary); font-weight: 700; text-transform: uppercase; }
-
-        .steam-btn { background: white; color: black; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 800; font-size: 0.8rem; cursor: pointer; }
-
-        /* LOGO BAR */
-        .logo-bar { height: 120px; display: flex; align-items: center; justify-content: center; }
-        .main-logo { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-        .main-logo h1 { font-size: 1.5rem; letter-spacing: 5px; font-weight: 900; background: linear-gradient(to bottom, #fff, #64748b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-        /* CAROUSEL */
-        .hero-carousel { padding: 0 4rem; max-width: 1200px; margin: 0 auto 4rem; }
-        .carousel-card { height: 400px; border-radius: 30px; display: flex; padding: 4rem; align-items: center; justify-content: space-between; overflow: hidden; position: relative; }
-        .hero-info { z-index: 2; max-width: 50%; }
-        .hero-info h2 { font-size: 3.5rem; line-height: 1.1; margin: 1rem 0; font-weight: 900; }
-        .badge { background: var(--primary); padding: 5px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: 900; box-shadow: 0 0 20px var(--primary); }
-        .hero-price { display: flex; align-items: center; gap: 1.5rem; margin-top: 2rem; }
-        .current { font-size: 2rem; font-weight: 900; background: var(--primary); padding: 10px 25px; border-radius: 15px; }
-        .old { text-decoration: line-through; color: #475569; font-size: 1.2rem; }
-
-        .hero-image { position: relative; width: 400px; }
-        .hero-image img { width: 100%; z-index: 2; position: relative; filter: drop-shadow(0 0 30px rgba(0,0,0,0.5)); }
-        .glow-effect { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; height: 300px; background: var(--primary); filter: blur(100px); opacity: 0.4; }
-
-        /* GRID */
-        .shop-grid-container { max-width: 1400px; margin: 0 auto; padding: 0 4rem 100px; }
-        .grid-header { margin-bottom: 3rem; display: flex; justify-content: center; }
-        .categories { display: flex; gap: 10px; background: rgba(255,255,255,0.03); padding: 8px; border-radius: 15px; }
-        .cat-btn { background: transparent; border: none; color: #64748b; padding: 10px 25px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: 0.3s; }
-        .cat-btn.active { background: var(--primary); color: white; }
-
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; }
-        .p-card { border-radius: 25px; overflow: hidden; display: flex; flex-direction: column; }
-        .p-img { height: 200px; background: #1a1d26; position: relative; }
-        .p-badge { position: absolute; top: 15px; right: 15px; background: #f59e0b; color: black; padding: 5px 12px; border-radius: 8px; font-size: 0.7rem; font-weight: 900; }
-        .p-details { padding: 2rem; flex: 1; display: flex; flex-direction: column; }
-        .p-cat { color: var(--primary); font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
-        .p-details h3 { font-size: 1.4rem; margin: 0.5rem 0; font-weight: 800; }
-        .p-details p { color: #64748b; font-size: 0.9rem; margin-bottom: 2rem; line-height: 1.6; height: 45px; overflow: hidden; }
-        .p-footer { margin-top: auto; display: flex; justify-content: space-between; align-items: center; }
-        .p-price { font-size: 1.6rem; font-weight: 900; }
-        .p-buy { background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.1); padding: 10px 20px; border-radius: 12px; font-weight: 800; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: 0.3s; }
-        .p-buy:hover { background: var(--primary); border-color: transparent; box-shadow: 0 5px 15px var(--primary-glow); }
-
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-      `}</style>
+        .category-bar { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; }
+        .price-tag { display: flex; flex-direction: column; }
+        .old-price { text-decoration: line-through; color: var(--text-dim); font-size: 0.9rem; }
+        
+        .p-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+        .p-icon { color: var(--primary); filter: drop-shadow(0 0 10px var(--primary-glow)); }
+        .p-popular { background: #f59e0b; color: #000; font-size: 0.6rem; font-weight: 900; padding: 4px 8px; border-radius: 6px; }
+      `}} />
     </div>
   );
 };
 
 export default ShopView;
+对抗
