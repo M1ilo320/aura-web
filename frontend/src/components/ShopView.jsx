@@ -13,109 +13,74 @@ const ShopView = () => {
     fetch(`${BACKEND_URL}/api/shop/${slug}`)
       .then(res => res.json())
       .then(data => {
-        setShop(data.shop);
-        setProducts(data.products);
-        if (data.shop.accent_color) {
-            document.documentElement.style.setProperty('--primary', data.shop.accent_color);
+        if (data.shop) {
+          setShop(data.shop);
+          setProducts(data.products || []);
         }
         setLoading(false);
       })
       .catch(err => {
-        console.error(err);
+        console.error("Błąd API:", err);
         setLoading(false);
       });
   }, [slug]);
 
-  if (loading) return (
-    <div className="loading-container">
-      <div className="loader"></div>
-    </div>
-  );
+  if (loading) {
+    return <div style={{color: 'white', textAlign: 'center', marginTop: '100px', fontSize: '24px'}}>Wczytywanie sklepu...</div>;
+  }
 
-  if (!shop) return (
-    <div className="error-screen">
-      <h1>404</h1>
-      <p>Sklep "{slug}" nie istnieje.</p>
-    </div>
-  );
+  if (!shop) {
+    return (
+      <div style={{color: 'white', textAlign: 'center', marginTop: '100px'}}>
+        <h1>Błąd 404</h1>
+        <p>Sklep o nazwie <b>{slug}</b> nie istnieje w bazie danych.</p>
+        <p>Upewnij się, że dodałeś go w TiDB Cloud.</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="site-wrapper">
-      <div className="glow-bg"></div>
-
-      {/* TOP NAVBAR */}
-      <nav className="top-nav">
-        <div className="nav-left">Wróć na {shop.name.replace(' Store', '')}</div>
-        <div className="nav-logo">
-           <img src="https://imgur.com/vHq7Fv8.png" alt="Logo" />
-        </div>
-        <button className="steam-login">
-          <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/steam-icon.png" width="20" style={{filter: 'invert(1)'}} />
-          Zaloguj na Steam
-        </button>
-      </nav>
-
-      {/* STATS & TICKER BAR */}
-      <div className="stats-bar">
-        <div className="online-players">
-          <span className="online-count">21</span>
-          <span className="online-label">Graczy Online</span>
-        </div>
-        <div className="recent-purchases">
-          {[
-            {u: 'WarszawskiGnuciak', i: 'UNBAN'},
-            {u: 'DzikiWSH', i: 'GOLDEN COINS'},
-            {u: 'Antolek', i: 'VIP GOLD'},
-            {u: 'Smog', i: 'PRACA MECHANIKA'}
-          ].map((p, idx) => (
-            <div key={idx} className="purchase-item">
-              <div className="avatar"></div>
-              <span className="user">{p.u}</span>
-              <span className="item">{p.i}</span>
-            </div>
-          ))}
-        </div>
+    <div style={{ backgroundColor: '#0a0c14', minHeight: '100vh', color: 'white', fontFamily: 'sans-serif' }}>
+      
+      {/* MENU GÓRNE */}
+      <div style={{ background: '#111420', padding: '15px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #222' }}>
+        <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#888' }}>WRÓĆ NA {shop.name.toUpperCase()}</div>
+        <div style={{ fontSize: '24px', fontWeight: '900', color: shop.accent_color || '#a855f7' }}>{shop.name}</div>
+        <div style={{ background: '#1a1d29', padding: '8px 15px', borderRadius: '5px', fontSize: '12px', border: '1px solid #333' }}>ZALOGUJ PRZEZ STEAM</div>
       </div>
 
-      {/* HERO SECTION */}
-      <div className="hero">
-        <h1>Szybko i bezpiecznie</h1>
-        <p>Ekspresowa realizacja i wygodne zakupy. Nie zwlekaj!</p>
+      {/* PASEK ZAKUPÓW */}
+      <div style={{ background: '#0d0f17', padding: '10px 40px', borderBottom: '1px solid #222', display: 'flex', gap: '30px', fontSize: '13px' }}>
+        <span style={{ color: '#22c55e', fontWeight: 'bold' }}>● 21 GRACZY ONLINE</span>
+        <span style={{ color: '#aaa' }}>Ostatnie zakupy: <b>WarszawskiGnuciak</b> (UNBAN), <b>DzikiWSH</b> (MONETY)</span>
       </div>
 
-      <div className="container">
-        {/* MAIN PROMO CARD */}
-        <div className="main-promo">
-          <div className="promo-info">
-            <h2 className="promo-title">ZESTAW POCZĄTKUJĄCEGO</h2>
-            <p className="promo-desc">Zestaw zawiera: Rangę Trial Support i Golden Coins x1200</p>
-            <div className="promo-footer">
-              <div className="price-box">
-                <span className="promo-price">49,99 zł</span>
-                <span className="promo-old-price">90,00 zł</span>
+      <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '40px 20px' }}>
+        
+        {/* HERO */}
+        <div style={{ background: 'linear-gradient(135deg, #111420 0%, #0a0c14 100%)', borderRadius: '20px', padding: '50px', marginBottom: '40px', border: '1px solid #222', textAlign: 'center' }}>
+            <h1 style={{ fontSize: '40px', margin: '0 0 10px 0' }}>SZYBKO I BEZPIECZNIE</h1>
+            <p style={{ color: '#888', fontSize: '18px' }}>Ekspresowa realizacja i wygodne zakupy. Nie zwlekaj!</p>
+        </div>
+
+        {/* PRODUKTY */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+          {products.length > 0 ? products.map((p) => (
+            <div key={p.id} style={{ background: '#111420', padding: '25px', borderRadius: '15px', border: '1px solid #222' }}>
+              <div style={{ fontSize: '30px', marginBottom: '10px' }}>📦</div>
+              <h3 style={{ margin: '0 0 10px 0' }}>{p.name}</h3>
+              <p style={{ color: '#888', fontSize: '14px', marginBottom: '20px' }}>{p.description}</p>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: '20px', fontWeight: 'bold', color: shop.accent_color || '#a855f7' }}>{p.price} zł</span>
+                <button style={{ background: shop.accent_color || '#a855f7', color: 'white', border: 'none', padding: '10px 20px', borderRadius: '5px', fontWeight: 'bold', cursor: 'pointer' }}>DO KOSZYKA</button>
               </div>
-              <button className="btn-buy">KUP TERAZ</button>
             </div>
-          </div>
-          <div className="promo-image"></div>
-        </div>
-
-        {/* PRODUCTS GRID */}
-        <div className="grid">
-          {products.map((p) => (
-            <div key={p.id} className="card">
-              <div className="card-icon" style={{fontSize: '2rem'}}>📦</div>
-              <h3>{p.name}</h3>
-              <p>{p.description}</p>
-              <div className="price">{p.price} zł</div>
-              <button className="p-buy">DO KOSZYKA</button>
-            </div>
-          ))}
+          )) : <p style={{ textAlign: 'center', width: '100%', color: '#555' }}>Brak produktów w tym sklepie.</p>}
         </div>
       </div>
+
     </div>
   );
 };
 
 export default ShopView;
-对抗
