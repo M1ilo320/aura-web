@@ -22,7 +22,7 @@ const ShopView = () => {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const steamid = params.get('steamid');
-    
+
     if (steamid) {
       localStorage.setItem('aura_steamid', steamid);
       setUserData({ steamid });
@@ -50,7 +50,7 @@ const ShopView = () => {
         .then(json => {
           if (json.shop) {
             setData(json);
-            document.documentElement.style.setProperty('--primary', json.shop.accent_color || '#a855f7');
+            document.documentElement.style.setProperty('--primary', json.shop.accent_color || '#C9CED6');
           } else {
             setData(prev => ({ ...prev, shop: null }));
           }
@@ -83,7 +83,7 @@ const ShopView = () => {
       handleSteamLogin();
       return;
     }
-    
+
     fetch(`${BACKEND_URL}/api/create-order`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -94,20 +94,20 @@ const ShopView = () => {
         amount: 1
       })
     })
-    .then(res => res.json())
-    .then(json => {
-      if (json.success) {
-        alert(`Sukces! Zakupiono ${product.name}. Odbierz nagrodę w grze.`);
-      }
-    });
+      .then(res => res.json())
+      .then(json => {
+        if (json.success) {
+          alert(`Sukces! Zakupiono ${product.name}. Odbierz nagrodę w grze.`);
+        }
+      });
   };
 
   if (loading) return <div className="loading">WCZYTYWANIE SKLEPU...</div>;
   if (!data.shop) return <div className="loading">SKLEP NIE ISTNIEJE</div>;
 
   const categories = ['WSZYSTKO', ...new Set(data.products.map(p => p.category?.toUpperCase() || 'INNE'))];
-  const filteredProducts = activeCategory === 'WSZYSTKO' 
-    ? data.products 
+  const filteredProducts = activeCategory === 'WSZYSTKO'
+    ? data.products
     : data.products.filter(p => (p.category?.toUpperCase() || 'INNE') === activeCategory);
 
   const { shop, recent, onlinePlayers } = data;
@@ -115,7 +115,7 @@ const ShopView = () => {
   return (
     <div className="app-wrapper">
       <div className="mesh-gradient"></div>
-      
+
       <nav className="top-nav">
         <div className="nav-container">
           <div className="nav-left">
@@ -133,13 +133,13 @@ const ShopView = () => {
               <div className="user-pill">
                 <img src={steamProfile.avatar} alt="p" />
                 <div className="user-details-mini">
-                    <span className="unick">{steamProfile.nickname}</span>
-                    <button onClick={handleLogout} className="logout-btn">Logout</button>
+                  <span className="unick">{steamProfile.nickname}</span>
+                  <button onClick={handleLogout} className="logout-btn">Logout</button>
                 </div>
               </div>
             ) : (
               <button className="steam-btn" onClick={handleSteamLogin}>
-                 Zaloguj na Steam
+                Zaloguj na Steam
               </button>
             )}
           </div>
@@ -187,7 +187,7 @@ const ShopView = () => {
                     <div className="hero-price-row">
                       <span className="price-pill">{heroProduct.price} zł</span>
                       {heroProduct.price > 100 && <span className="old-price">{(heroProduct.price * 1.3).toFixed(2)} zł</span>}
-                      <button 
+                      <button
                         className="hero-buy-btn"
                         onClick={() => handlePurchase(heroProduct)}
                       >
@@ -213,9 +213,9 @@ const ShopView = () => {
 
           <div className="cat-tabs">
             {categories.map(cat => (
-              <button 
-                key={cat} 
-                className={activeCategory === cat ? 'active' : ''} 
+              <button
+                key={cat}
+                className={activeCategory === cat ? 'active' : ''}
                 onClick={() => setActiveCategory(cat)}
               >
                 {cat}
@@ -309,13 +309,13 @@ const ShopView = () => {
  
         /* HERO CARD */
         .hero-slider { margin-bottom: 100px; }
-        .hero-card { background: #151113; border: 1px solid rgba(201, 206, 214, 0.2); border-radius: 40px; padding: 60px; display: flex; align-items: center; justify-content: space-between; position: relative; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.6); }
-        .hero-tag { color: var(--primary); font-size: 11px; font-weight: 900; letter-spacing: 3px; margin-bottom: 15px; }
-        .hero-info h2 { font-size: 48px; font-weight: 900; margin-bottom: 20px; letter-spacing: -2px; }
-        .hero-info p { color: #888; font-size: 16px; margin-bottom: 45px; max-width: 380px; line-height: 1.7; }
+        .hero-card { background: rgba(201, 206, 214, 0.07); border: 1px solid rgba(201, 206, 214, 0.3); border-radius: 40px; padding: 60px; display: flex; align-items: center; justify-content: space-between; position: relative; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.6); backdrop-filter: blur(20px); }
+        .hero-tag { color: var(--primary); font-size: 11px; font-weight: 900; letter-spacing: 3px; margin-bottom: 15px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .hero-info h2 { font-size: 48px; font-weight: 900; margin-bottom: 20px; letter-spacing: -2px; text-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .hero-info p { color: #ccc; font-size: 16px; margin-bottom: 45px; max-width: 380px; line-height: 1.7; text-shadow: 0 2px 5px rgba(0,0,0,0.3); }
         .hero-price-row { display: flex; align-items: center; gap: 25px; margin-top: 20px; }
         .price-pill { background: var(--primary); padding: 15px 35px; border-radius: 50px; font-weight: 900; font-size: 22px; box-shadow: 0 15px 40px rgba(0,0,0,0.5); }
-        .old-price { text-decoration: line-through; color: #444; font-size: 18px; font-weight: 800; }
+        .old-price { text-decoration: line-through; color: #666; font-size: 18px; font-weight: 800; }
         .hero-buy-btn { background: #fff; color: #000; border: none; padding: 15px 40px; border-radius: 50px; font-weight: 900; font-size: 14px; cursor: pointer; transition: 0.3s; box-shadow: 0 10px 30px rgba(255,255,255,0.1); }
         .hero-buy-btn:hover { background: var(--primary); color: #fff; transform: scale(1.05); box-shadow: 0 0 30px var(--primary); }
         .hero-visual { position: relative; width: 450px; }
@@ -323,18 +323,18 @@ const ShopView = () => {
         .hero-glow { position: absolute; inset: 0; background: radial-gradient(circle, var(--primary) 0%, transparent 75%); opacity: 0.35; filter: blur(60px); }
  
         /* PRODUCTS SECTION */
-        .products-section { background: #120e10; border: 1px solid rgba(201, 206, 214, 0.15); border-radius: 50px; padding: 80px; margin-bottom: 120px; box-shadow: 0 60px 120px rgba(0,0,0,0.4); }
+        .products-section { background: rgba(201, 206, 214, 0.04); border: 1px solid rgba(201, 206, 214, 0.2); border-radius: 50px; padding: 80px; margin-bottom: 120px; box-shadow: 0 60px 120px rgba(0,0,0,0.4); backdrop-filter: blur(15px); }
         .section-head { text-align: center; margin-bottom: 70px; }
         .section-head h3 { font-size: 32px; font-weight: 900; margin-bottom: 15px; letter-spacing: -1.5px; }
         .section-head p { font-size: 12px; font-weight: 900; color: #22c55e; letter-spacing: 3px; }
  
         .cat-tabs { display: flex; gap: 20px; justify-content: center; margin-bottom: 70px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 40px; }
-        .cat-tabs button { background: transparent; border: none; color: #444; font-weight: 800; font-size: 14px; cursor: pointer; padding: 10px 30px; transition: 0.3s; position: relative; }
+        .cat-tabs button { background: transparent; border: none; color: #666; font-weight: 800; font-size: 14px; cursor: pointer; padding: 10px 30px; transition: 0.3s; position: relative; }
         .cat-tabs button.active { color: #fff; }
         .cat-tabs button.active::after { content: ''; position: absolute; bottom: -40px; left: 0; right: 0; height: 3px; background: var(--primary); box-shadow: 0 0 25px var(--primary); }
  
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; }
-        .item-card { background: rgba(255,255,255,0.01); border: 1px solid rgba(201, 206, 214, 0.1); border-radius: 35px; padding: 35px; transition: 0.4s; position: relative; overflow: hidden; }
+        .item-card { background: rgba(201, 206, 214, 0.02); border: 1px solid rgba(201, 206, 214, 0.15); border-radius: 35px; padding: 35px; transition: 0.4s; position: relative; overflow: hidden; backdrop-filter: blur(10px); }
         .item-card:hover { border-color: var(--primary); transform: translateY(-12px); background: rgba(255,255,255,0.03); box-shadow: 0 40px 80px rgba(0,0,0,0.6); }
         
         .card-top { display: flex; justify-content: center; margin-bottom: 30px; position: relative; height: 80px; align-items: center; }
