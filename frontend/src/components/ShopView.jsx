@@ -33,7 +33,7 @@ const ShopView = () => {
     }
   }, []);
 
-  // Pobieranie profilu Steam
+  // Pobieranie profilu Steam zalogowanego gracza
   useEffect(() => {
     if (userData?.steamid) {
       fetch(`${BACKEND_URL}/api/user/${userData.steamid}`)
@@ -64,7 +64,7 @@ const ShopView = () => {
     };
 
     fetchData();
-    const interval = setInterval(fetchData, 30000);
+    const interval = setInterval(fetchData, 15000);
     return () => clearInterval(interval);
   }, [currentSlug]);
 
@@ -128,32 +128,47 @@ const ShopView = () => {
                 <img src={steamProfile.avatar} alt="avatar" className="user-avatar" />
                 <div className="user-details">
                   <span className="user-nick">{steamProfile.nickname}</span>
-                  <button className="user-logout" onClick={handleLogout}>WYLOGUJ</button>
+                  <button className="user-logout" onClick={handleLogout}>WYLOGUJ SIĘ</button>
                 </div>
               </div>
             ) : (
-              <button className="login-btn" onClick={handleSteamLogin}>
-                <img src="https://community.akamai.steamstatic.com/public/images/signinthroughsteam/sits_01.png" alt="steam" />
+              <button className="login-btn-steam" onClick={handleSteamLogin}>
+                <img src="https://community.akamai.steamstatic.com/public/images/signinthroughsteam/sits_01.png" alt="Login with Steam" />
               </button>
             )}
           </div>
         </nav>
 
         <header className="shop-header">
-          <span className="badge">OFFICIAL STORE</span>
-          <h1>Najlepsze pakiety na serwerze</h1>
-          <p>Automatyczna dostawa, bezpieczne płatności i wsparcie dla Twojego ulubionego serwera.</p>
+          <span className="premium-badge">PROWADZISZ GRĘ NA NAJWYŻSZYM POZIOMIE</span>
+          <h1>Twoja przewaga zaczyna się tutaj</h1>
+          <p>Oficjalny sklep serwera RainRP. Każdy zakup wspiera nasz rozwój i pozwala nam tworzyć dla Was lepsze miejsce do gry.</p>
         </header>
 
-        <section className="recent-ticker">
-          <div className="ticker-label">OSTATNIE ZAKUPY:</div>
-          <div className="ticker-content">
-            {recent && recent.length > 0 ? recent.map((r, i) => (
-              <div key={i} className="ticker-item">
-                <span className="t-id">{r.steam_id.substring(0, 6)}..</span> 
-                kupił <span className="t-item">{r.item_name}</span>
-              </div>
-            )) : <div className="ticker-item">Oczekiwanie na pierwsze zakupy...</div>}
+        <section className="live-activity">
+          <div className="activity-header">OSTATNIE TRANSAKCJE:</div>
+          <div className="ticker-wrap">
+            <div className="ticker-move">
+              {recent && recent.length > 0 ? recent.map((r, i) => (
+                <div key={i} className="activity-card">
+                  <img src={r.avatar || "https://avatars.akamai.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg"} alt="p" />
+                  <div className="act-details">
+                    <span className="act-name">{r.nickname}</span>
+                    <span className="act-item">kupił {r.item_name}</span>
+                  </div>
+                </div>
+              )) : <div className="activity-card">Oczekiwanie na pierwsze zamówienia...</div>}
+              {/* Duplikacja dla płynności pętli */}
+              {recent && recent.length > 0 && recent.map((r, i) => (
+                <div key={`dup-${i}`} className="activity-card">
+                  <img src={r.avatar || "https://avatars.akamai.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg"} alt="p" />
+                  <div className="act-details">
+                    <span className="act-name">{r.nickname}</span>
+                    <span className="act-item">kupił {r.item_name}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -171,86 +186,104 @@ const ShopView = () => {
 
         <div className="products-grid">
           {filteredProducts.map(p => (
-            <div key={p.id} className="product-card">
-              <div className="p-icon">{p.category === 'WALUTA' ? '💰' : (p.category === 'RANGI' ? '👑' : '📦')}</div>
-              <div className="p-category">{p.category || 'INNE'}</div>
+            <div key={p.id} className="modern-card">
+              <div className="card-top">
+                <div className="card-badge">{p.category || 'INNE'}</div>
+                <div className="card-icon">{p.category === 'WALUTA' ? '💎' : (p.category === 'RANGI' ? '👑' : '📦')}</div>
+              </div>
               <h3>{p.name}</h3>
-              <div className="p-footer">
-                <span className="p-price">{p.price} PLN</span>
-                <button className="p-buy" onClick={() => handlePurchase(p)}>KUP</button>
+              <div className="card-price-row">
+                <div className="price-tag">{p.price} PLN</div>
+                <button className="buy-trigger" onClick={() => handlePurchase(p)}>WYBIERZ</button>
               </div>
             </div>
           ))}
         </div>
 
-        <footer className="main-footer">
-          <div className="f-logo">{shop.name} STORE</div>
-          <div className="f-links">
-            <a href="#">REGULAMIN</a>
-            <a href="#">KONTAKT</a>
-            <a href="#">POLITYKA</a>
+        <footer className="shop-footer">
+          <div className="footer-grid">
+            <div className="f-col">
+              <h3>{shop.name} STORE</h3>
+              <p>Najbezpieczniejszy system płatności i błyskawiczna dostawa produktów wprost na serwer.</p>
+            </div>
+            <div className="f-col">
+              <h4>NAWIGACJA</h4>
+              <a href="#">Strona Główna</a>
+              <a href="#">Regulamin</a>
+              <a href="#">Kontakt</a>
+            </div>
           </div>
+          <div className="footer-bottom">© 2024 AuraStore System. Wszystkie prawa zastrzeżone.</div>
         </footer>
       </div>
 
       <style>{`
-        :root { --primary: #a855f7; --bg: #090b10; --card: #11141d; --card-light: #1a1e2b; --text: #ffffff; --text-dim: #717684; }
-        * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: var(--bg); color: var(--text); margin: 0; }
-        
-        .main-container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
-        
-        .top-navbar { height: 100px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .shop-name { font-size: 26px; font-weight: 950; letter-spacing: -1px; }
-        .online-tag { font-size: 11px; font-weight: 800; color: var(--text-dim); display: flex; align-items: center; gap: 8px; margin-top: 4px; }
-        .dot { width: 7px; height: 7px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px #22c55e; }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
 
-        .user-profile-card { display: flex; align-items: center; gap: 12px; background: var(--card-light); padding: 6px 16px 6px 6px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); }
-        .user-avatar { width: 38px; height: 38px; border-radius: 12px; }
-        .user-nick { font-size: 13px; font-weight: 800; display: block; }
-        .user-logout { background: transparent; border: none; color: #ff4444; font-size: 10px; font-weight: 900; cursor: pointer; padding: 0; margin-top: 2px; }
-        .login-btn { background: transparent; border: none; cursor: pointer; opacity: 0.8; transition: 0.3s; }
-        .login-btn:hover { opacity: 1; transform: translateY(-2px); }
+        :root { --primary: #a855f7; --bg: #0b0d12; --card: #151921; --card-hover: #1c222d; --text: #ffffff; --text-muted: #808491; }
+        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: var(--bg); color: var(--text); margin: 0; overflow-x: hidden; }
 
-        .shop-header { text-align: center; padding: 80px 0 60px; }
-        .badge { background: rgba(168, 85, 247, 0.15); color: var(--primary); font-size: 11px; font-weight: 900; padding: 6px 14px; border-radius: 8px; letter-spacing: 1px; }
-        .shop-header h1 { font-size: 48px; font-weight: 950; margin: 20px 0 15px; letter-spacing: -2px; }
-        .shop-header p { color: var(--text-dim); max-width: 550px; margin: 0 auto; line-height: 1.6; }
+        .app-wrapper { min-height: 100vh; background: radial-gradient(circle at 0% 0%, rgba(168, 85, 247, 0.05) 0%, transparent 30%); }
+        .main-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-        .recent-ticker { background: var(--card); border: 1px solid rgba(255,255,255,0.05); padding: 15px 25px; border-radius: 20px; display: flex; align-items: center; gap: 20px; margin-bottom: 50px; overflow: hidden; }
-        .ticker-label { font-size: 11px; font-weight: 900; color: var(--primary); white-space: nowrap; }
-        .ticker-content { display: flex; gap: 30px; animation: ticker 40s linear infinite; }
-        .ticker-item { font-size: 12px; font-weight: 600; color: var(--text-dim); white-space: nowrap; }
-        .t-id { color: #fff; }
-        .t-item { color: var(--primary); font-weight: 800; }
-        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .top-navbar { height: 100px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; }
+        .shop-name { font-size: 28px; font-weight: 800; letter-spacing: -1.5px; background: linear-gradient(to bottom, #fff, #aaa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .online-tag { font-size: 11px; font-weight: 700; color: var(--text-muted); display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+        .dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px rgba(34, 197, 94, 0.5); }
+
+        .user-profile-card { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 8px 16px 8px 8px; border-radius: 18px; }
+        .user-avatar { width: 40px; height: 40px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); }
+        .user-nick { font-size: 14px; font-weight: 700; display: block; }
+        .user-logout { background: transparent; border: none; color: #f43f5e; font-size: 11px; font-weight: 800; cursor: pointer; padding: 0; }
+        .login-btn-steam { background: transparent; border: none; cursor: pointer; transition: 0.3s; padding: 0; }
+        .login-btn-steam:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+        .shop-header { text-align: center; padding: 60px 0; }
+        .premium-badge { color: var(--primary); font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; display: block; }
+        .shop-header h1 { font-size: 56px; font-weight: 800; margin: 0; letter-spacing: -3px; line-height: 1.1; }
+        .shop-header p { color: var(--text-muted); font-size: 17px; max-width: 600px; margin: 25px auto 0; line-height: 1.6; }
+
+        .live-activity { background: var(--card); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; padding: 20px; margin-bottom: 60px; overflow: hidden; position: relative; }
+        .activity-header { font-size: 11px; font-weight: 800; color: var(--primary); margin-bottom: 15px; letter-spacing: 1px; }
+        .ticker-wrap { width: 100%; overflow: hidden; }
+        .ticker-move { display: flex; gap: 20px; width: max-content; animation: tickerScroll 30s linear infinite; }
+        .activity-card { background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.03); padding: 12px 20px; border-radius: 16px; display: flex; align-items: center; gap: 15px; min-width: 240px; }
+        .activity-card img { width: 32px; height: 32px; border-radius: 10px; }
+        .act-name { font-size: 13px; font-weight: 700; display: block; }
+        .act-item { font-size: 11px; color: var(--text-muted); }
+        @keyframes tickerScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         .category-tabs { display: flex; gap: 10px; margin-bottom: 40px; justify-content: center; }
-        .category-tabs button { background: var(--card); border: 1px solid rgba(255,255,255,0.05); color: var(--text-dim); padding: 12px 24px; border-radius: 14px; font-weight: 800; font-size: 12px; cursor: pointer; transition: 0.3s; }
-        .category-tabs button.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 10px 20px rgba(168, 85, 247, 0.2); }
+        .category-tabs button { background: var(--card); border: 1px solid rgba(255,255,255,0.05); color: var(--text-muted); padding: 14px 28px; border-radius: 16px; font-weight: 700; font-size: 13px; cursor: pointer; transition: 0.3s; }
+        .category-tabs button.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3); }
 
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
-        .product-card { background: var(--card); border: 1px solid rgba(255,255,255,0.05); padding: 35px; border-radius: 28px; transition: 0.3s; position: relative; overflow: hidden; }
-        .product-card:hover { transform: translateY(-8px); border-color: var(--primary); background: var(--card-light); }
-        .p-icon { font-size: 32px; margin-bottom: 25px; }
-        .p-category { font-size: 10px; font-weight: 900; color: var(--primary); letter-spacing: 1px; margin-bottom: 8px; }
-        .product-card h3 { font-size: 20px; margin: 0; font-weight: 900; letter-spacing: -0.5px; }
-        .p-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.05); }
-        .p-price { font-size: 22px; font-weight: 950; }
-        .p-buy { background: var(--primary); border: none; color: #fff; font-weight: 950; padding: 10px 22px; border-radius: 12px; cursor: pointer; transition: 0.3s; font-size: 12px; }
-        .p-buy:hover { filter: brightness(1.1); transform: scale(1.05); }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+        .modern-card { background: var(--card); border: 1px solid rgba(255,255,255,0.05); padding: 35px; border-radius: 32px; transition: 0.4s; position: relative; }
+        .modern-card:hover { transform: translateY(-10px); border-color: var(--primary); background: var(--card-hover); box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
+        .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; }
+        .card-badge { background: rgba(255,255,255,0.03); font-size: 10px; font-weight: 800; padding: 6px 12px; border-radius: 8px; color: var(--text-muted); text-transform: uppercase; }
+        .card-icon { font-size: 32px; }
+        .modern-card h3 { font-size: 22px; margin: 0; font-weight: 800; letter-spacing: -1px; }
+        .card-price-row { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; }
+        .price-tag { font-size: 24px; font-weight: 800; color: #fff; }
+        .buy-trigger { background: var(--primary); border: none; color: #fff; font-weight: 800; padding: 12px 24px; border-radius: 14px; cursor: pointer; transition: 0.3s; font-size: 12px; }
+        .buy-trigger:hover { filter: brightness(1.2); transform: scale(1.05); }
 
-        .main-footer { margin-top: 100px; padding: 60px 0; border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
-        .f-logo { font-size: 14px; font-weight: 900; color: var(--text-dim); }
-        .f-links { display: flex; gap: 25px; }
-        .f-links a { font-size: 11px; font-weight: 900; color: var(--text-dim); text-decoration: none; }
-        .f-links a:hover { color: #fff; }
+        .shop-footer { margin-top: 120px; padding: 80px 0; border-top: 1px solid rgba(255,255,255,0.05); }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 100px; margin-bottom: 60px; }
+        .f-col h3 { font-size: 20px; margin-bottom: 20px; }
+        .f-col h4 { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; }
+        .f-col p { color: var(--text-muted); line-height: 1.6; }
+        .f-col a { display: block; color: var(--text-muted); text-decoration: none; margin-bottom: 12px; font-size: 14px; font-weight: 600; }
+        .f-col a:hover { color: #fff; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 40px; color: #444; font-size: 12px; text-align: center; }
 
-        .loading { height: 100vh; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 900; letter-spacing: 2px; color: var(--primary); }
+        .loading { height: 100vh; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 800; color: var(--primary); background: var(--bg); }
 
         @media (max-width: 768px) {
-          .main-footer { flex-direction: column; gap: 30px; text-align: center; }
-          .shop-header h1 { font-size: 32px; }
+          .shop-header h1 { font-size: 36px; }
+          .footer-grid { grid-template-columns: 1fr; gap: 50px; }
         }
       `}</style>
     </div>
