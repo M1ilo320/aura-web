@@ -156,7 +156,7 @@ const ShopView = () => {
 
           <div className="ticker-section">
             <div className="ticker-track">
-              {recent && recent.length > 0 ? [...recent, ...recent].map((r, i) => (
+              {recent && recent.length > 0 ? recent.map((r, i) => (
                 <div key={i} className="purchase-item">
                   <img src={r.avatar || "https://avatars.akamai.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg"} alt="p" />
                   <div className="p-details">
