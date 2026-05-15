@@ -124,7 +124,9 @@ const ShopView = () => {
             </a>
           </div>
           <div className="nav-center">
-            <div className="logo-text">AURA</div>
+            <div className="logo-img-wrap">
+              <img src="/aura_logo.png" alt="AURA" className="nav-logo-img" />
+            </div>
           </div>
           <div className="nav-right">
             {steamProfile ? (
@@ -234,17 +236,17 @@ const ShopView = () => {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap');
 
-        :root { --primary: #7e1b3d; --bg: #0b0a0b; --card: #151113; --text: #ffffff; }
+        :root { --primary: #C9CED6; --bg: #0b0a0b; --card: #151113; --text: #ffffff; }
         * { box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
         body { background: var(--bg); color: var(--text); margin: 0; overflow-x: hidden; }
 
         .app-wrapper { min-height: 100vh; position: relative; }
         .mesh-gradient { 
           position: fixed; inset: 0; z-index: -1;
-          background: radial-gradient(circle at 0% 0%, var(--primary) 0%, transparent 45%),
-                      radial-gradient(circle at 100% 100%, var(--primary) 0%, transparent 45%),
+          background: radial-gradient(circle at 0% 0%, #202225 0%, transparent 45%),
+                      radial-gradient(circle at 100% 100%, #202225 0%, transparent 45%),
                       radial-gradient(circle at 50% 50%, #000 0%, transparent 100%);
-          opacity: 0.25;
+          opacity: 0.6;
         }
 
         /* NAVBAR */
@@ -257,7 +259,8 @@ const ShopView = () => {
         .nav-left b { color: #fff; }
         
         .nav-center { flex: 1; display: flex; justify-content: center; align-items: center; }
-        .logo-text { font-weight: 900; letter-spacing: 10px; font-size: 24px; color: var(--primary); text-shadow: 0 0 20px var(--primary); }
+        .logo-img-wrap { height: 50px; display: flex; align-items: center; }
+        .nav-logo-img { height: 100%; width: auto; filter: drop-shadow(0 0 15px rgba(201, 206, 214, 0.2)); }
         
         .nav-right { flex: 1; display: flex; justify-content: flex-end; align-items: center; }
         .steam-btn { background: var(--primary); border: none; color: #fff; padding: 12px 28px; border-radius: 14px; font-size: 12px; font-weight: 800; cursor: pointer; transition: 0.3s; }
