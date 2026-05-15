@@ -83,14 +83,14 @@ const HomeView = () => {
 
         .home-main { padding: 40px 20px; display: flex; justify-content: center; }
         .selector-panel { 
-          background: var(--card-bg); border: 1px solid rgba(255,255,255,0.05); 
+          background: #161618; border: 2px solid #C9CED6; 
           border-radius: 40px; padding: 80px 60px; width: 100%; max-width: 1100px; 
           text-align: center; box-shadow: 0 50px 100px rgba(0,0,0,0.8);
           position: relative; overflow: hidden;
         }
         .selector-panel::before {
-          content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-          background: linear-gradient(90deg, transparent, var(--p), transparent);
+          content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+          background: linear-gradient(90deg, transparent, #C9CED6, transparent);
         }
 
         .selector-panel h1 { font-size: 48px; font-weight: 900; margin-bottom: 10px; letter-spacing: -2px; color: #fff; }
@@ -98,13 +98,13 @@ const HomeView = () => {
 
         .server-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
         .server-card { 
-          background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); 
+          background: #1a1a1c; border: 1px solid rgba(201, 206, 214, 0.3); 
           border-radius: 30px; padding: 40px 20px; text-decoration: none; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
           position: relative;
         }
         .server-card:hover { 
-          background: rgba(201, 206, 214, 0.05); border-color: var(--p); 
-          transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+          background: #1e1e21; border-color: #fff; 
+          transform: translateY(-10px); box-shadow: 0 40px 80px rgba(0,0,0,0.6);
         }
         .server-icon { height: 100px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; transition: 0.3s; }
         .server-icon img { max-width: 90px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5)); }
