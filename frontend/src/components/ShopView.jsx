@@ -122,14 +122,16 @@ const ShopView = () => {
             <span>WRÓĆ NA <b>{shop.name.toUpperCase()}</b></span>
           </div>
           <div className="nav-center">
-            <div className="logo-placeholder">AURA</div>
+            <div className="logo-text">AURA</div>
           </div>
           <div className="nav-right">
             {steamProfile ? (
               <div className="user-pill">
                 <img src={steamProfile.avatar} alt="p" />
-                <span>{steamProfile.nickname}</span>
-                <button onClick={handleLogout} className="logout-btn">Logout</button>
+                <div className="user-details-mini">
+                    <span className="unick">{steamProfile.nickname}</span>
+                    <button onClick={handleLogout} className="logout-btn">Logout</button>
+                </div>
               </div>
             ) : (
               <button className="steam-btn" onClick={handleSteamLogin}>
@@ -179,7 +181,7 @@ const ShopView = () => {
               </div>
             </div>
             <div className="hero-visual">
-              <img src="/premium_shop_hero_bundle_1778871007164.png" alt="Hero bundle" className="car-img" />
+              <img src="/hero_bundle.png" alt="Hero bundle" className="car-img" />
               <div className="hero-glow"></div>
             </div>
           </div>
@@ -207,8 +209,8 @@ const ShopView = () => {
             {filteredProducts.map(p => (
               <div key={p.id} className="item-card">
                 <div className="card-top">
-                  {p.price > 100 && <span className="p-badge">OKAZJA</span>}
                   <div className="item-icon">{p.category === 'WALUTA' ? '💰' : (p.category === 'RANGI' ? '👑' : '📦')}</div>
+                  {p.price > 100 && <div className="p-badge-wrap"><span className="p-badge">OKAZJA</span></div>}
                 </div>
                 <div className="item-info">
                   <h4>{p.name}</h4>
@@ -244,22 +246,27 @@ const ShopView = () => {
         }
 
         /* NAVBAR */
-        .top-nav { height: 70px; border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(0,0,0,0.2); }
+        .top-nav { height: 80px; border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(0,0,0,0.4); }
         .nav-container { max-width: 1400px; margin: 0 auto; height: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
+        .nav-left { flex: 1; }
         .nav-left span { font-size: 11px; color: #777; letter-spacing: 1.5px; }
         .nav-left b { color: #fff; }
-        .logo-placeholder { font-weight: 900; letter-spacing: 5px; font-size: 20px; color: var(--primary); }
         
-        .steam-btn { background: var(--primary); border: none; color: #fff; padding: 10px 24px; border-radius: 12px; font-size: 12px; font-weight: 800; cursor: pointer; transition: 0.3s; }
+        .nav-center { flex: 1; display: flex; justify-content: center; }
+        .logo-text { font-weight: 900; letter-spacing: 10px; font-size: 24px; color: var(--primary); text-shadow: 0 0 20px var(--primary); }
+        
+        .nav-right { flex: 1; display: flex; justify-content: flex-end; }
+        .steam-btn { background: var(--primary); border: none; color: #fff; padding: 12px 28px; border-radius: 14px; font-size: 12px; font-weight: 800; cursor: pointer; transition: 0.3s; }
         .steam-btn:hover { filter: brightness(1.2); transform: translateY(-1px); }
         
-        .user-pill { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.03); padding: 5px 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
-        .user-pill img { width: 30px; height: 30px; border-radius: 8px; }
-        .user-pill span { font-size: 13px; font-weight: 800; }
-        .logout-btn { background: transparent; border: none; color: #ff4444; font-size: 10px; font-weight: 800; cursor: pointer; margin-left: 10px; padding: 0; }
+        .user-pill { display: flex; align-items: center; gap: 15px; background: rgba(255,255,255,0.03); padding: 8px 18px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); }
+        .user-pill img { width: 35px; height: 35px; border-radius: 10px; }
+        .user-details-mini { display: flex; flex-direction: column; }
+        .unick { font-size: 13px; font-weight: 800; }
+        .logout-btn { background: transparent; border: none; color: #ff4444; font-size: 10px; font-weight: 800; cursor: pointer; padding: 0; text-align: left; }
 
         /* ACTIVITY STRIP */
-        .activity-strip { height: 60px; background: rgba(0,0,0,0.4); border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .activity-strip { height: 60px; background: rgba(0,0,0,0.5); border-bottom: 1px solid rgba(255,255,255,0.03); }
         .strip-container { max-width: 1400px; margin: 0 auto; height: 100%; display: flex; align-items: center; }
         .stats { padding: 0 40px; display: flex; align-items: center; gap: 10px; font-size: 11px; color: #888; white-space: nowrap; }
         .stats b { color: #fff; font-size: 14px; }
@@ -273,48 +280,51 @@ const ShopView = () => {
         .t-prod { font-size: 11px; font-weight: 800; color: #fff; }
 
         /* HERO HEADER */
-        .main-scroll { max-width: 1100px; margin: 0 auto; padding-top: 60px; }
-        .hero-header { text-align: center; margin-bottom: 50px; }
-        .badge-mini { background: var(--primary); display: inline-block; padding: 4px 12px; border-radius: 5px; font-size: 10px; font-weight: 900; margin-bottom: 15px; letter-spacing: 1px; }
-        .hero-header h1 { font-size: 48px; font-weight: 900; margin: 0; letter-spacing: -3px; line-height: 1.1; }
-        .hero-header p { color: #888; font-size: 15px; margin-top: 15px; }
+        .main-scroll { max-width: 1100px; margin: 0 auto; padding-top: 80px; }
+        .hero-header { text-align: center; margin-bottom: 60px; }
+        .badge-mini { background: var(--primary); display: inline-block; padding: 5px 15px; border-radius: 6px; font-size: 10px; font-weight: 900; margin-bottom: 20px; letter-spacing: 1px; }
+        .hero-header h1 { font-size: 56px; font-weight: 900; margin: 0; letter-spacing: -4px; line-height: 1; }
+        .hero-header p { color: #888; font-size: 16px; margin-top: 20px; }
 
         /* HERO CARD */
-        .hero-slider { margin-bottom: 80px; }
-        .hero-card { background: #151113; border: 1px solid rgba(255,255,255,0.05); border-radius: 35px; padding: 60px; display: flex; align-items: center; justify-content: space-between; position: relative; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.5); }
-        .hero-info h2 { font-size: 42px; font-weight: 900; margin-bottom: 15px; letter-spacing: -2px; }
-        .hero-info p { color: #888; font-size: 15px; margin-bottom: 40px; max-width: 350px; line-height: 1.6; }
-        .hero-price-row { display: flex; align-items: center; gap: 20px; }
-        .price-pill { background: var(--primary); padding: 14px 30px; border-radius: 50px; font-weight: 900; font-size: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .old-price { text-decoration: line-through; color: #444; font-size: 16px; font-weight: 800; }
-        .hero-visual { position: relative; width: 400px; }
-        .car-img { width: 100%; position: relative; z-index: 2; transform: scale(1.3) translateY(10px); filter: drop-shadow(0 20px 50px rgba(0,0,0,0.8)); }
-        .hero-glow { position: absolute; inset: 0; background: radial-gradient(circle, var(--primary) 0%, transparent 70%); opacity: 0.3; filter: blur(50px); }
+        .hero-slider { margin-bottom: 100px; }
+        .hero-card { background: #151113; border: 1px solid rgba(255,255,255,0.05); border-radius: 40px; padding: 60px; display: flex; align-items: center; justify-content: space-between; position: relative; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.6); }
+        .hero-info h2 { font-size: 48px; font-weight: 900; margin-bottom: 20px; letter-spacing: -2px; }
+        .hero-info p { color: #888; font-size: 16px; margin-bottom: 45px; max-width: 380px; line-height: 1.7; }
+        .hero-price-row { display: flex; align-items: center; gap: 25px; }
+        .price-pill { background: var(--primary); padding: 15px 35px; border-radius: 50px; font-weight: 900; font-size: 22px; box-shadow: 0 15px 40px rgba(0,0,0,0.5); }
+        .old-price { text-decoration: line-through; color: #444; font-size: 18px; font-weight: 800; }
+        .hero-visual { position: relative; width: 450px; }
+        .car-img { width: 100%; position: relative; z-index: 2; transform: scale(1.4) translateY(15px); filter: drop-shadow(0 30px 60px rgba(0,0,0,0.9)); }
+        .hero-glow { position: absolute; inset: 0; background: radial-gradient(circle, var(--primary) 0%, transparent 75%); opacity: 0.35; filter: blur(60px); }
 
         /* PRODUCTS SECTION */
-        .products-section { background: #120e10; border: 1px solid rgba(255,255,255,0.05); border-radius: 45px; padding: 70px; margin-bottom: 100px; box-shadow: 0 50px 100px rgba(0,0,0,0.3); }
-        .section-head { text-align: center; margin-bottom: 60px; }
-        .section-head h3 { font-size: 28px; font-weight: 900; margin-bottom: 10px; letter-spacing: -1px; }
-        .section-head p { font-size: 11px; font-weight: 900; color: #22c55e; letter-spacing: 2px; }
+        .products-section { background: #120e10; border: 1px solid rgba(255,255,255,0.05); border-radius: 50px; padding: 80px; margin-bottom: 120px; box-shadow: 0 60px 120px rgba(0,0,0,0.4); }
+        .section-head { text-align: center; margin-bottom: 70px; }
+        .section-head h3 { font-size: 32px; font-weight: 900; margin-bottom: 15px; letter-spacing: -1.5px; }
+        .section-head p { font-size: 12px; font-weight: 900; color: #22c55e; letter-spacing: 3px; }
 
-        .cat-tabs { display: flex; gap: 15px; justify-content: center; margin-bottom: 60px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 30px; }
-        .cat-tabs button { background: transparent; border: none; color: #444; font-weight: 800; font-size: 13px; cursor: pointer; padding: 10px 25px; transition: 0.3s; position: relative; }
+        .cat-tabs { display: flex; gap: 20px; justify-content: center; margin-bottom: 70px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 40px; }
+        .cat-tabs button { background: transparent; border: none; color: #444; font-weight: 800; font-size: 14px; cursor: pointer; padding: 10px 30px; transition: 0.3s; position: relative; }
         .cat-tabs button.active { color: #fff; }
-        .cat-tabs button.active::after { content: ''; position: absolute; bottom: -30px; left: 0; right: 0; height: 2px; background: var(--primary); box-shadow: 0 0 20px var(--primary); }
+        .cat-tabs button.active::after { content: ''; position: absolute; bottom: -40px; left: 0; right: 0; height: 3px; background: var(--primary); box-shadow: 0 0 25px var(--primary); }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 25px; }
-        .item-card { background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.04); border-radius: 30px; padding: 30px; transition: 0.4s; }
-        .item-card:hover { border-color: var(--primary); transform: translateY(-10px); background: rgba(255,255,255,0.03); box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
-        .card-top { display: flex; justify-content: space-between; margin-bottom: 25px; min-height: 30px; }
-        .p-badge { background: #22c55e; font-size: 9px; font-weight: 900; padding: 4px 10px; border-radius: 6px; color: #000; }
-        .item-icon { font-size: 38px; width: 100%; text-align: center; margin: 15px 0; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3)); }
-        .item-info h4 { font-size: 16px; font-weight: 800; text-align: center; margin: 0 0 25px; }
-        .price-row { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.04); padding-top: 25px; }
-        .price { font-size: 20px; font-weight: 900; color: #fff; }
-        .buy-btn { background: var(--primary); border: none; color: #fff; width: 40px; height: 40px; border-radius: 12px; cursor: pointer; font-weight: 900; transition: 0.3s; font-size: 18px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; }
+        .item-card { background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.04); border-radius: 35px; padding: 35px; transition: 0.4s; position: relative; overflow: hidden; }
+        .item-card:hover { border-color: var(--primary); transform: translateY(-12px); background: rgba(255,255,255,0.03); box-shadow: 0 40px 80px rgba(0,0,0,0.6); }
+        
+        .card-top { display: flex; justify-content: center; margin-bottom: 30px; position: relative; height: 80px; align-items: center; }
+        .p-badge-wrap { position: absolute; top: -10px; left: -10px; }
+        .p-badge { background: #22c55e; font-size: 9px; font-weight: 950; padding: 5px 12px; border-radius: 8px; color: #000; letter-spacing: 0.5px; }
+        
+        .item-icon { font-size: 46px; filter: drop-shadow(0 15px 20px rgba(0,0,0,0.4)); }
+        .item-info h4 { font-size: 18px; font-weight: 800; text-align: center; margin: 0 0 30px; }
+        .price-row { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.04); padding-top: 30px; }
+        .price { font-size: 22px; font-weight: 900; color: #fff; }
+        .buy-btn { background: var(--primary); border: none; color: #fff; width: 45px; height: 45px; border-radius: 14px; cursor: pointer; font-weight: 900; transition: 0.3s; font-size: 20px; }
         .buy-btn:hover { transform: scale(1.1) rotate(90deg); filter: brightness(1.2); }
 
-        .footer { text-align: center; padding-bottom: 80px; color: #333; font-size: 12px; font-weight: 700; letter-spacing: 1px; }
+        .footer { text-align: center; padding-bottom: 100px; color: #222; font-size: 12px; font-weight: 700; letter-spacing: 2px; }
 
         .loading { height: 100vh; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 900; color: var(--primary); background: var(--bg); }
       `}</style>
