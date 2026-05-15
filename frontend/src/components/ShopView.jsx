@@ -71,6 +71,39 @@ const ShopView = () => {
     setUserData(null);
   };
 
+  const handlePurchase = (product) => {
+    if (!userData) {
+      alert("Musisz się zalogować przez Steam, aby dokonać zakupu!");
+      handleSteamLogin();
+      return;
+    }
+
+    const BACKEND_URL = import.meta.env.VITE_API_URL || "https://aura-api-5tbi.onrender.com";
+    
+    fetch(`${BACKEND_URL}/api/create-order`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        shopId: shop.id,
+        steamId: userData.steamid,
+        productId: product.id,
+        amount: 1
+      })
+    })
+    .then(res => res.json())
+    .then(json => {
+      if (json.success) {
+        alert(`Sukces! Zakupiono ${product.name}. Wejdź do gry, aby odebrać nagrodę.`);
+      } else {
+        alert("Błąd podczas składania zamówienia.");
+      }
+    })
+    .catch(err => {
+      console.error("Order error:", err);
+      alert("Wystąpił błąd połączenia z serwerem.");
+    });
+  };
+
   if (loading) return <div className="loading">Wczytywanie...</div>;
   
   if (!data.shop) return (
@@ -157,11 +190,29 @@ const ShopView = () => {
               <h3>{p.name}</h3>
               <div className="card-footer">
                 <span className="price">{p.price} PLN</span>
-                <button className="add-btn">+</button>
+                <button className="add-btn" onClick={() => handlePurchase(p)}>+</button>
               </div>
             </div>
           ))}
         </div>
+
+        {recent && recent.length > 0 && (
+          <section className="recent-purchases">
+            <div className="section-title">OSTATNIE ZAKUPY</div>
+            <div className="recent-list">
+              {recent.map((order, idx) => (
+                <div key={idx} className="recent-item">
+                  <div className="recent-avatar">{order.steam_id.substring(0, 2)}</div>
+                  <div className="recent-info">
+                    <div className="recent-name">SteamID: {order.steam_id.substring(0, 10)}...</div>
+                    <div className="recent-item-name">Kupił: {order.item_name}</div>
+                  </div>
+                  <div className="recent-time">{new Date(order.created_at).toLocaleTimeString()}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         <footer className="shop-footer">
           <div className="footer-line"></div>
@@ -246,6 +297,17 @@ const ShopView = () => {
         .add-btn { background: var(--primary); border: none; color: white; width: 40px; height: 40px; border-radius: 12px; font-weight: 900; cursor: pointer; transition: 0.3s; font-size: 20px; display: flex; align-items: center; justify-content: center; }
         .add-btn:hover { transform: scale(1.1) rotate(90deg); filter: brightness(1.1); }
 
+        .recent-purchases { margin-top: 100px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 30px; padding: 40px; }
+        .section-title { font-size: 11px; font-weight: 900; color: var(--primary); letter-spacing: 3px; margin-bottom: 30px; text-align: center; }
+        .recent-list { display: flex; flex-direction: column; gap: 15px; }
+        .recent-item { display: flex; align-items: center; gap: 20px; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 20px; border: 1px solid rgba(255,255,255,0.03); transition: 0.3s; }
+        .recent-item:hover { transform: translateX(10px); border-color: var(--primary); }
+        .recent-avatar { width: 45px; height: 45px; background: var(--primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 14px; box-shadow: 0 10px 20px rgba(168, 85, 247, 0.2); }
+        .recent-info { flex: 1; }
+        .recent-name { font-size: 13px; font-weight: 800; color: white; margin-bottom: 4px; }
+        .recent-item-name { font-size: 12px; color: var(--text-muted); }
+        .recent-time { font-size: 11px; color: var(--text-muted); font-weight: 700; }
+
         .shop-footer { margin-top: 120px; }
         .footer-line { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent); margin-bottom: 40px; }
         .footer-content { display: flex; justify-content: space-between; align-items: center; }
@@ -254,6 +316,13 @@ const ShopView = () => {
         .footer-links { display: flex; gap: 30px; }
         .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 12px; font-weight: 700; transition: 0.3s; }
         .footer-links a:hover { color: var(--primary); }
+        
+        @media (max-width: 768px) {
+          .slide-content { flex-direction: column; text-align: center; gap: 40px; }
+          .slide-info p { margin: 15px auto 35px; }
+          .slide-actions { justify-content: center; }
+          .footer-content { flex-direction: column; gap: 30px; text-align: center; }
+        }
 
         .loading { background: var(--bg); height: 100vh; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 950; color: var(--primary); letter-spacing: -1.5px; }
       `}</style>
