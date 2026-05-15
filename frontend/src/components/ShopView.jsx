@@ -33,7 +33,6 @@ const ShopView = () => {
     }
   }, []);
 
-  // Pobieranie profilu Steam zalogowanego gracza
   useEffect(() => {
     if (userData?.steamid) {
       fetch(`${BACKEND_URL}/api/user/${userData.steamid}`)
@@ -115,62 +114,71 @@ const ShopView = () => {
 
   return (
     <div className="app-wrapper">
-      <div className="main-container">
-        <nav className="top-navbar">
-          <div className="logo-section">
-            <div className="shop-name">{shop.name.toUpperCase()}</div>
-            <div className="online-tag"><span className="dot"></span> {onlinePlayers} GRACZY ONLINE</div>
-          </div>
-          
-          <div className="nav-actions">
-            {steamProfile ? (
-              <div className="user-profile-card">
-                <img src={steamProfile.avatar} alt="avatar" className="user-avatar" />
-                <div className="user-details">
-                  <span className="user-nick">{steamProfile.nickname}</span>
-                  <button className="user-logout" onClick={handleLogout}>WYLOGUJ SIĘ</button>
-                </div>
+      {/* GÓRNY PASEK NAWIGACJI (HEADER) */}
+      <nav className="header-bar">
+        <div className="header-left">
+          <span className="back-link">WRÓĆ NA <b>AuraStore</b></span>
+        </div>
+        
+        <div className="header-center">
+          <img src="https://i.imgur.com/8YvLh8f.png" alt="logo" className="center-skull" />
+        </div>
+
+        <div className="header-right">
+          {steamProfile ? (
+            <div className="user-profile-mini">
+              <img src={steamProfile.avatar} alt="p" />
+              <div className="user-info-mini">
+                <span>{steamProfile.nickname}</span>
+                <button onClick={handleLogout}>WYLOGUJ</button>
               </div>
-            ) : (
-              <button className="login-btn-steam" onClick={handleSteamLogin}>
-                <img src="https://community.akamai.steamstatic.com/public/images/signinthroughsteam/sits_01.png" alt="Login with Steam" />
-              </button>
-            )}
-          </div>
-        </nav>
+            </div>
+          ) : (
+            <button className="steam-login-button" onClick={handleSteamLogin}>
+              <i className="key-icon">🔑</i> Zaloguj na Steam
+            </button>
+          )}
+        </div>
+      </nav>
 
-        <header className="shop-header">
-          <span className="premium-badge">PROWADZISZ GRĘ NA NAJWYŻSZYM POZIOMIE</span>
-          <h1>Twoja przewaga zaczyna się tutaj</h1>
-          <p>Oficjalny sklep serwera RainRP. Każdy zakup wspiera nasz rozwój i pozwala nam tworzyć dla Was lepsze miejsce do gry.</p>
-        </header>
-
-        <section className="live-activity">
-          <div className="activity-header">OSTATNIE TRANSAKCJE:</div>
-          <div className="ticker-wrap">
-            <div className="ticker-move">
-              {recent && recent.length > 0 ? recent.map((r, i) => (
-                <div key={i} className="activity-card">
-                  <img src={r.avatar || "https://avatars.akamai.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg"} alt="p" />
-                  <div className="act-details">
-                    <span className="act-name">{r.nickname}</span>
-                    <span className="act-item">kupił {r.item_name}</span>
-                  </div>
-                </div>
-              )) : <div className="activity-card">Oczekiwanie na pierwsze zamówienia...</div>}
-              {/* Duplikacja dla płynności pętli */}
-              {recent && recent.length > 0 && recent.map((r, i) => (
-                <div key={`dup-${i}`} className="activity-card">
-                  <img src={r.avatar || "https://avatars.akamai.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg"} alt="p" />
-                  <div className="act-details">
-                    <span className="act-name">{r.nickname}</span>
-                    <span className="act-item">kupił {r.item_name}</span>
-                  </div>
-                </div>
-              ))}
+      {/* PASEK LICZNIKA I OSTATNICH ZAKUPÓW (SUBHEADER) */}
+      <section className="activity-bar">
+        <div className="activity-container">
+          <div className="players-counter">
+            <span className="online-dot"></span>
+            <div className="count-info">
+              <span className="number">{onlinePlayers}</span>
+              <span className="label">GRACZY ONLINE</span>
             </div>
           </div>
-        </section>
+          
+          <div className="vertical-divider"></div>
+
+          <div className="ticker-section">
+            <div className="ticker-track">
+              {recent && recent.length > 0 ? [...recent, ...recent].map((r, i) => (
+                <div key={i} className="purchase-item">
+                  <img src={r.avatar || "https://avatars.akamai.steamstatic.com/fef49e7fa7e1997310d705b2a6158ff8dc1cdfeb_full.jpg"} alt="p" />
+                  <div className="p-details">
+                    <span className="p-name">{r.nickname.toUpperCase()}</span>
+                    <span className="p-product">{r.item_name.toUpperCase()}</span>
+                  </div>
+                </div>
+              )) : (
+                <div className="purchase-item">
+                  <span className="p-product">OCZEKIWANIE NA PIERWSZE ZAKUPY...</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="main-content">
+        <header className="hero-section">
+          <h1>{shop.name.toUpperCase()} - OFICJALNY SKLEP</h1>
+          <p>Witaj w oficjalnym sklepie serwera {shop.name}. Wszystkie środki przeznaczane są na rozwój projektu.</p>
+        </header>
 
         <div className="category-tabs">
           {categories.map(cat => (
@@ -186,105 +194,81 @@ const ShopView = () => {
 
         <div className="products-grid">
           {filteredProducts.map(p => (
-            <div key={p.id} className="modern-card">
-              <div className="card-top">
-                <div className="card-badge">{p.category || 'INNE'}</div>
-                <div className="card-icon">{p.category === 'WALUTA' ? '💎' : (p.category === 'RANGI' ? '👑' : '📦')}</div>
+            <div key={p.id} className="premium-card">
+              <div className="card-header">
+                <span className="card-cat">{p.category || 'INNE'}</span>
+                <div className="card-icon">📦</div>
               </div>
               <h3>{p.name}</h3>
-              <div className="card-price-row">
-                <div className="price-tag">{p.price} PLN</div>
-                <button className="buy-trigger" onClick={() => handlePurchase(p)}>WYBIERZ</button>
+              <div className="card-bottom">
+                <span className="card-price">{p.price} PLN</span>
+                <button className="buy-trigger" onClick={() => handlePurchase(p)}>KUP TERAZ</button>
               </div>
             </div>
           ))}
         </div>
-
-        <footer className="shop-footer">
-          <div className="footer-grid">
-            <div className="f-col">
-              <h3>{shop.name} STORE</h3>
-              <p>Najbezpieczniejszy system płatności i błyskawiczna dostawa produktów wprost na serwer.</p>
-            </div>
-            <div className="f-col">
-              <h4>NAWIGACJA</h4>
-              <a href="#">Strona Główna</a>
-              <a href="#">Regulamin</a>
-              <a href="#">Kontakt</a>
-            </div>
-          </div>
-          <div className="footer-bottom">© 2024 AuraStore System. Wszystkie prawa zastrzeżone.</div>
-        </footer>
       </div>
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-
-        :root { --primary: #a855f7; --bg: #0b0d12; --card: #151921; --card-hover: #1c222d; --text: #ffffff; --text-muted: #808491; }
-        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        :root { --primary: #a855f7; --bg: #0d0f17; --bar: #12141f; --card: #161925; --text: #ffffff; --text-muted: #6b7280; }
+        * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background: var(--bg); color: var(--text); margin: 0; overflow-x: hidden; }
 
-        .app-wrapper { min-height: 100vh; background: radial-gradient(circle at 0% 0%, rgba(168, 85, 247, 0.05) 0%, transparent 30%); }
-        .main-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        /* HEADER BAR (TOP) */
+        .header-bar { height: 70px; background: var(--bar); display: flex; align-items: center; justify-content: space-between; padding: 0 40px; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .back-link { font-size: 11px; color: #555; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s; }
+        .back-link b { color: #888; }
+        .back-link:hover { color: #fff; }
+        .center-skull { height: 35px; opacity: 0.8; }
+        .steam-login-button { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 8px 20px; border-radius: 50px; font-size: 12px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+        .steam-login-button:hover { background: rgba(255,255,255,0.07); transform: translateY(-1px); border-color: var(--primary); }
+        .user-profile-mini { display: flex; align-items: center; gap: 10px; }
+        .user-profile-mini img { width: 32px; height: 32px; border-radius: 8px; }
+        .user-info-mini span { font-size: 11px; font-weight: 800; display: block; }
+        .user-info-mini button { background: transparent; border: none; color: #f43f5e; font-size: 9px; font-weight: 800; cursor: pointer; padding: 0; }
 
-        .top-navbar { height: 100px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; }
-        .shop-name { font-size: 28px; font-weight: 800; letter-spacing: -1.5px; background: linear-gradient(to bottom, #fff, #aaa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .online-tag { font-size: 11px; font-weight: 700; color: var(--text-muted); display: flex; align-items: center; gap: 8px; margin-top: 4px; }
-        .dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px rgba(34, 197, 94, 0.5); }
+        /* ACTIVITY BAR (SUBHEADER) */
+        .activity-bar { height: 80px; background: rgba(0,0,0,0.15); border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .activity-container { max-width: 1400px; margin: 0 auto; height: 100%; display: flex; align-items: center; }
+        
+        .players-counter { display: flex; align-items: center; gap: 15px; padding: 0 40px; min-width: 200px; }
+        .online-dot { width: 10px; height: 10px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px rgba(34,197,94,0.5); }
+        .count-info .number { font-size: 18px; font-weight: 900; display: block; line-height: 1; }
+        .count-info .label { font-size: 10px; color: var(--text-muted); font-weight: 800; letter-spacing: 0.5px; }
 
-        .user-profile-card { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 8px 16px 8px 8px; border-radius: 18px; }
-        .user-avatar { width: 40px; height: 40px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); }
-        .user-nick { font-size: 14px; font-weight: 700; display: block; }
-        .user-logout { background: transparent; border: none; color: #f43f5e; font-size: 11px; font-weight: 800; cursor: pointer; padding: 0; }
-        .login-btn-steam { background: transparent; border: none; cursor: pointer; transition: 0.3s; padding: 0; }
-        .login-btn-steam:hover { transform: translateY(-2px); filter: brightness(1.1); }
+        .vertical-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.05); }
 
-        .shop-header { text-align: center; padding: 60px 0; }
-        .premium-badge { color: var(--primary); font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; display: block; }
-        .shop-header h1 { font-size: 56px; font-weight: 800; margin: 0; letter-spacing: -3px; line-height: 1.1; }
-        .shop-header p { color: var(--text-muted); font-size: 17px; max-width: 600px; margin: 25px auto 0; line-height: 1.6; }
+        .ticker-section { flex: 1; overflow: hidden; position: relative; }
+        .ticker-track { display: flex; gap: 40px; animation: scrollTicker 40s linear infinite; width: max-content; }
+        .purchase-item { display: flex; align-items: center; gap: 12px; min-width: 200px; }
+        .purchase-item img { width: 34px; height: 34px; border-radius: 6px; }
+        .p-details .p-name { font-size: 11px; font-weight: 800; color: #44aaff; display: block; }
+        .p-details .p-product { font-size: 11px; font-weight: 800; color: #fff; }
 
-        .live-activity { background: var(--card); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; padding: 20px; margin-bottom: 60px; overflow: hidden; position: relative; }
-        .activity-header { font-size: 11px; font-weight: 800; color: var(--primary); margin-bottom: 15px; letter-spacing: 1px; }
-        .ticker-wrap { width: 100%; overflow: hidden; }
-        .ticker-move { display: flex; gap: 20px; width: max-content; animation: tickerScroll 30s linear infinite; }
-        .activity-card { background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.03); padding: 12px 20px; border-radius: 16px; display: flex; align-items: center; gap: 15px; min-width: 240px; }
-        .activity-card img { width: 32px; height: 32px; border-radius: 10px; }
-        .act-name { font-size: 13px; font-weight: 700; display: block; }
-        .act-item { font-size: 11px; color: var(--text-muted); }
-        @keyframes tickerScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        .category-tabs { display: flex; gap: 10px; margin-bottom: 40px; justify-content: center; }
-        .category-tabs button { background: var(--card); border: 1px solid rgba(255,255,255,0.05); color: var(--text-muted); padding: 14px 28px; border-radius: 16px; font-weight: 700; font-size: 13px; cursor: pointer; transition: 0.3s; }
-        .category-tabs button.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3); }
+        /* CONTENT */
+        .main-content { max-width: 1200px; margin: 0 auto; padding: 80px 20px; }
+        .hero-section { text-align: center; margin-bottom: 80px; }
+        .hero-section h1 { font-size: 48px; font-weight: 900; letter-spacing: -2px; margin-bottom: 20px; }
+        .hero-section p { color: var(--text-muted); max-width: 600px; margin: 0 auto; line-height: 1.6; }
 
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
-        .modern-card { background: var(--card); border: 1px solid rgba(255,255,255,0.05); padding: 35px; border-radius: 32px; transition: 0.4s; position: relative; }
-        .modern-card:hover { transform: translateY(-10px); border-color: var(--primary); background: var(--card-hover); box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
-        .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; }
-        .card-badge { background: rgba(255,255,255,0.03); font-size: 10px; font-weight: 800; padding: 6px 12px; border-radius: 8px; color: var(--text-muted); text-transform: uppercase; }
-        .card-icon { font-size: 32px; }
-        .modern-card h3 { font-size: 22px; margin: 0; font-weight: 800; letter-spacing: -1px; }
-        .card-price-row { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; }
-        .price-tag { font-size: 24px; font-weight: 800; color: #fff; }
-        .buy-trigger { background: var(--primary); border: none; color: #fff; font-weight: 800; padding: 12px 24px; border-radius: 14px; cursor: pointer; transition: 0.3s; font-size: 12px; }
+        .category-tabs { display: flex; gap: 10px; margin-bottom: 60px; justify-content: center; }
+        .category-tabs button { background: var(--card); border: 1px solid rgba(255,255,255,0.05); color: var(--text-muted); padding: 14px 28px; border-radius: 12px; font-weight: 800; font-size: 13px; cursor: pointer; transition: 0.3s; }
+        .category-tabs button.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
+        .premium-card { background: var(--card); border: 1px solid rgba(255,255,255,0.05); padding: 40px; border-radius: 24px; transition: 0.3s; }
+        .premium-card:hover { transform: translateY(-10px); border-color: var(--primary); background: #1a1e2b; }
+        .card-header { display: flex; justify-content: space-between; margin-bottom: 30px; }
+        .card-cat { font-size: 10px; font-weight: 900; color: var(--primary); letter-spacing: 1.5px; text-transform: uppercase; }
+        .premium-card h3 { font-size: 22px; font-weight: 800; margin: 0 0 40px; }
+        .card-bottom { display: flex; justify-content: space-between; align-items: center; }
+        .card-price { font-size: 24px; font-weight: 900; }
+        .buy-trigger { background: var(--primary); border: none; color: #fff; font-weight: 900; padding: 12px 24px; border-radius: 12px; cursor: pointer; transition: 0.3s; font-size: 12px; }
         .buy-trigger:hover { filter: brightness(1.2); transform: scale(1.05); }
 
-        .shop-footer { margin-top: 120px; padding: 80px 0; border-top: 1px solid rgba(255,255,255,0.05); }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 100px; margin-bottom: 60px; }
-        .f-col h3 { font-size: 20px; margin-bottom: 20px; }
-        .f-col h4 { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; }
-        .f-col p { color: var(--text-muted); line-height: 1.6; }
-        .f-col a { display: block; color: var(--text-muted); text-decoration: none; margin-bottom: 12px; font-size: 14px; font-weight: 600; }
-        .f-col a:hover { color: #fff; }
-        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 40px; color: #444; font-size: 12px; text-align: center; }
-
-        .loading { height: 100vh; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 800; color: var(--primary); background: var(--bg); }
-
-        @media (max-width: 768px) {
-          .shop-header h1 { font-size: 36px; }
-          .footer-grid { grid-template-columns: 1fr; gap: 50px; }
-        }
+        .loading { height: 100vh; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 900; color: var(--primary); background: var(--bg); }
       `}</style>
     </div>
   );
