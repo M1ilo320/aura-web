@@ -119,7 +119,9 @@ const ShopView = () => {
       <nav className="top-nav">
         <div className="nav-container">
           <div className="nav-left">
-            <span>WRÓĆ NA <b>{shop.name.toUpperCase()}</b></span>
+            <a href="/" className="back-home-link">
+              <span>WRÓĆ NA <b>AURA</b></span>
+            </a>
           </div>
           <div className="nav-center">
             <div className="logo-text">AURA</div>
@@ -248,14 +250,16 @@ const ShopView = () => {
         /* NAVBAR */
         .top-nav { height: 80px; border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(0,0,0,0.4); }
         .nav-container { max-width: 1400px; margin: 0 auto; height: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
-        .nav-left { flex: 1; }
-        .nav-left span { font-size: 11px; color: #777; letter-spacing: 1.5px; }
+        .nav-left { flex: 1; display: flex; justify-content: flex-start; }
+        .back-home-link { text-decoration: none; transition: 0.3s; }
+        .back-home-link span { font-size: 11px; color: #777; letter-spacing: 1.5px; }
+        .back-home-link:hover span { color: var(--primary); }
         .nav-left b { color: #fff; }
         
-        .nav-center { flex: 1; display: flex; justify-content: center; }
+        .nav-center { flex: 1; display: flex; justify-content: center; align-items: center; }
         .logo-text { font-weight: 900; letter-spacing: 10px; font-size: 24px; color: var(--primary); text-shadow: 0 0 20px var(--primary); }
         
-        .nav-right { flex: 1; display: flex; justify-content: flex-end; }
+        .nav-right { flex: 1; display: flex; justify-content: flex-end; align-items: center; }
         .steam-btn { background: var(--primary); border: none; color: #fff; padding: 12px 28px; border-radius: 14px; font-size: 12px; font-weight: 800; cursor: pointer; transition: 0.3s; }
         .steam-btn:hover { filter: brightness(1.2); transform: translateY(-1px); }
         
