@@ -9,6 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<ShopView />} />
         <Route path="/s/:slug" element={<ShopView />} />
+        {/* Przekierowanie jeśli ktoś wejdzie na coś innego */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
