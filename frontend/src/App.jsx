@@ -7,9 +7,9 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<ShopView />} />
         <Route path="/s/:slug" element={<ShopView />} />
-        {/* Przekierowanie jeśli ktoś wejdzie na stronę główną bez sluga */}
-        <Route path="/" element={<div style={{color: 'white', textAlign: 'center', marginTop: '50px'}}>Wpisz /s/twoj-slug w adresie</div>} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
   );
