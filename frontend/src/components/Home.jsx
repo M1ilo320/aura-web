@@ -3,9 +3,22 @@ import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [shops, setShops] = useState([]);
+  const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Wykrywanie logowania
+    const params = new URLSearchParams(window.location.search);
+    const steamid = params.get('steamid');
+    if (steamid) {
+      localStorage.setItem('aura_steamid', steamid);
+      setUserData({ steamid });
+      window.history.replaceState({}, document.title, window.location.pathname);
+    } else {
+      const saved = localStorage.getItem('aura_steamid');
+      if (saved) setUserData({ steamid: saved });
+    }
+
     const BACKEND_URL = import.meta.env.VITE_API_URL || "https://aura-api-5tbi.onrender.com";
     fetch(`${BACKEND_URL}/api/shops`)
       .then(res => res.json())
@@ -13,14 +26,30 @@ const Home = () => {
       .catch(err => console.error(err));
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem('aura_steamid');
+    setUserData(null);
+  };
+
   return (
     <div className="home-wrapper">
+      <div className="top-nav-home">
+        {userData ? (
+          <div className="user-info-home">
+            <span>ID: {userData.steamid.substring(0, 8)}..</span>
+            <button onClick={handleLogout}>WYLOGUJ</button>
+          </div>
+        ) : (
+          <div className="guest-info">Zaloguj się w sklepie, aby kupować!</div>
+        )}
+      </div>
       <div className="wave-bg"></div>
       <div className="container">
         <header className="home-header">
           <h1>Wybierz serwer</h1>
           <p>Nie ma Twojego serwera na liście? Użyj bezpośredniego linku do sklepu!</p>
         </header>
+
 
         <div className="server-grid">
           {shops.map(shop => (
@@ -36,7 +65,12 @@ const Home = () => {
       </div>
 
       <style>{`
-        .home-wrapper { min-height: 100vh; background: #0b0d14; color: white; font-family: 'Outfit', 'Inter', sans-serif; display: flex; align-items: center; justify-content: center; padding: 40px 20px; position: relative; overflow: hidden; }
+        .home-wrapper { min-height: 100vh; background: #0b0d14; color: white; font-family: 'Outfit', 'Inter', sans-serif; display: flex; align-items: center; justify-content: center; padding: 100px 20px 40px; position: relative; overflow: hidden; }
+        .top-nav-home { position: absolute; top: 30px; right: 40px; z-index: 10; }
+        .user-info-home { display: flex; align-items: center; gap: 15px; background: rgba(255,255,255,0.03); padding: 10px 20px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.05); font-size: 11px; font-weight: 800; }
+        .user-info-home button { background: transparent; border: none; color: #ff4444; font-weight: 900; cursor: pointer; font-size: 10px; }
+        .guest-info { font-size: 10px; color: #444; font-weight: 800; letter-spacing: 1px; }
+
         .wave-bg { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.05) 0%, transparent 70%); z-index: 1; }
         
         .container { max-width: 900px; width: 100%; background: #141721; border-radius: 40px; padding: 60px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 40px 100px rgba(0,0,0,0.5); position: relative; z-index: 2; }

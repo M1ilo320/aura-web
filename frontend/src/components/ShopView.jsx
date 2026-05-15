@@ -61,8 +61,8 @@ const ShopView = () => {
 
   const handleSteamLogin = () => {
     const BACKEND_URL = import.meta.env.VITE_API_URL || "https://aura-api-5tbi.onrender.com";
-    // Przekazujemy origin (np. https://aurastore.com.pl), żeby backend wiedział gdzie wrócić
-    const origin = window.location.origin;
+    // Przekazujemy CAŁY link (np. https://aurastore.com.pl/s/plugrp), żeby backend wiedział gdzie wrócić
+    const origin = window.location.href;
     window.location.href = `${BACKEND_URL}/api/auth/steam?origin=${encodeURIComponent(origin)}`;
   };
 
