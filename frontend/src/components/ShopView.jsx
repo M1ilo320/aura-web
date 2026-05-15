@@ -248,8 +248,8 @@ const ShopView = () => {
         }
 
         /* NAVBAR */
-        .top-nav { height: 80px; border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(0,0,0,0.4); }
-        .nav-container { max-width: 1400px; margin: 0 auto; height: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
+        .top-nav { height: 80px; border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(0,0,0,0.4); display: flex; align-items: center; }
+        .nav-container { width: 100%; max-width: 100%; height: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 60px; }
         .nav-left { flex: 1; display: flex; justify-content: flex-start; }
         .back-home-link { text-decoration: none; transition: 0.3s; }
         .back-home-link span { font-size: 11px; color: #777; letter-spacing: 1.5px; }
