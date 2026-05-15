@@ -6,6 +6,7 @@ const ShopView = () => {
   const [data, setData] = useState({ shop: null, products: [], recent: [], onlinePlayers: 0 });
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('WSZYSTKO');
+  const [userData, setUserData] = useState(null);
 
   const getSlug = () => {
     if (urlSlug) return urlSlug;
@@ -15,6 +16,21 @@ const ShopView = () => {
   };
 
   const currentSlug = getSlug();
+
+  useEffect(() => {
+    // Sprawdź czy w linku jest steamid (powrót z logowania)
+    const params = new URLSearchParams(window.location.search);
+    const steamid = params.get('steamid');
+    
+    if (steamid) {
+      localStorage.setItem('aura_steamid', steamid);
+      setUserData({ steamid });
+      window.history.replaceState({}, document.title, window.location.pathname);
+    } else {
+      const saved = localStorage.getItem('aura_steamid');
+      if (saved) setUserData({ steamid: saved });
+    }
+  }, []);
 
   useEffect(() => {
     const BACKEND_URL = import.meta.env.VITE_API_URL || "https://aura-api-5tbi.onrender.com";
@@ -45,7 +61,14 @@ const ShopView = () => {
 
   const handleSteamLogin = () => {
     const BACKEND_URL = import.meta.env.VITE_API_URL || "https://aura-api-5tbi.onrender.com";
-    window.location.href = `${BACKEND_URL}/api/auth/steam`;
+    // Przekazujemy origin (np. https://aurastore.com.pl), żeby backend wiedział gdzie wrócić
+    const origin = window.location.origin;
+    window.location.href = `${BACKEND_URL}/api/auth/steam?origin=${encodeURIComponent(origin)}`;
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('aura_steamid');
+    setUserData(null);
   };
 
   if (loading) return <div className="loading">Wczytywanie...</div>;
@@ -82,8 +105,14 @@ const ShopView = () => {
           </div>
           <div className="nav-actions">
             <button className="nav-link">GŁÓWNA</button>
-            <button className="nav-link">REGULAMIN</button>
-            <button className="login-btn" onClick={handleSteamLogin}>ZALOGUJ PRZEZ STEAM</button>
+            {userData ? (
+              <div className="logged-user">
+                <span className="steam-id">ID: {userData.steamid.substring(0, 8)}..</span>
+                <button className="logout-btn" onClick={handleLogout}>WYLOGUJ</button>
+              </div>
+            ) : (
+              <button className="login-btn" onClick={handleSteamLogin}>ZALOGUJ PRZEZ STEAM</button>
+            )}
           </div>
         </nav>
 
@@ -176,6 +205,11 @@ const ShopView = () => {
         .nav-link:hover { color: white; }
         .login-btn { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); color: white; padding: 12px 24px; border-radius: 14px; font-weight: 900; font-size: 11px; cursor: pointer; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
         .login-btn:hover { background: rgba(255,255,255,0.06); transform: translateY(-2px); border-color: var(--primary); }
+
+        .logged-user { display: flex; align-items: center; gap: 15px; background: rgba(255,255,255,0.03); padding: 8px 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+        .steam-id { font-size: 10px; color: var(--primary); font-weight: 900; }
+        .logout-btn { background: transparent; border: none; color: #ff4444; font-size: 10px; font-weight: 900; cursor: pointer; transition: 0.3s; }
+        .logout-btn:hover { opacity: 0.7; }
 
         .shop-header { text-align: center; margin-bottom: 70px; margin-top: 50px; }
         .pre-title { color: var(--primary); font-size: 10px; font-weight: 900; letter-spacing: 3px; display: block; margin-bottom: 15px; }
