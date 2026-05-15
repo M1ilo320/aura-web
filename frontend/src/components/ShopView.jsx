@@ -236,17 +236,17 @@ const ShopView = () => {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap');
 
-        :root { --primary: #C9CED6; --bg: #0b0a0b; --card: #151113; --text: #ffffff; }
+        :root { --primary: ${shop.accent_color || '#C9CED6'}; --bg: #0b0a0b; --card: #151113; --text: #ffffff; }
         * { box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
         body { background: var(--bg); color: var(--text); margin: 0; overflow-x: hidden; }
 
         .app-wrapper { min-height: 100vh; position: relative; }
         .mesh-gradient { 
           position: fixed; inset: 0; z-index: -1;
-          background: radial-gradient(circle at 0% 0%, #202225 0%, transparent 45%),
-                      radial-gradient(circle at 100% 100%, #202225 0%, transparent 45%),
+          background: radial-gradient(circle at 0% 0%, var(--primary) 0%, transparent 45%),
+                      radial-gradient(circle at 100% 100%, var(--primary) 0%, transparent 45%),
                       radial-gradient(circle at 50% 50%, #000 0%, transparent 100%);
-          opacity: 0.6;
+          opacity: 0.35;
         }
 
         /* NAVBAR */
