@@ -174,22 +174,36 @@ const ShopView = () => {
           <p>Ekspresowa realizacja i wygodne zakupy. Nie zwlekaj!</p>
         </header>
 
-        <section className="hero-slider">
-          <div className="hero-card">
-            <div className="hero-info">
-              <h2>ZESTAW GRACZA</h2>
-              <p>Zestaw zawiera: Rangę Support / Miejsce z sezone / 10000 Monet</p>
-              <div className="hero-price-row">
-                <span className="price-pill">149,00 zł</span>
-                <span className="old-price">200,00 zł</span>
-              </div>
-            </div>
-            <div className="hero-visual">
-              <img src="/hero_bundle.png" alt="Hero bundle" className="car-img" />
-              <div className="hero-glow"></div>
-            </div>
-          </div>
-        </section>
+        {data.products.some(p => p.category?.toUpperCase() === 'PAKIETY') && (
+          <section className="hero-slider">
+            {(() => {
+              const heroProduct = data.products.find(p => p.category?.toUpperCase() === 'PAKIETY');
+              return (
+                <div className="hero-card">
+                  <div className="hero-info">
+                    <div className="hero-tag">POLECANY PAKIET</div>
+                    <h2>{heroProduct.name.toUpperCase()}</h2>
+                    <p>{heroProduct.description}</p>
+                    <div className="hero-price-row">
+                      <span className="price-pill">{heroProduct.price} zł</span>
+                      {heroProduct.price > 100 && <span className="old-price">{(heroProduct.price * 1.3).toFixed(2)} zł</span>}
+                      <button 
+                        className="hero-buy-btn"
+                        onClick={() => handlePurchase(heroProduct)}
+                      >
+                        KUP TERAZ
+                      </button>
+                    </div>
+                  </div>
+                  <div className="hero-visual">
+                    <img src={heroProduct.image_url || "/hero_bundle.png"} alt="Hero bundle" className="car-img" />
+                    <div className="hero-glow"></div>
+                  </div>
+                </div>
+              );
+            })()}
+          </section>
+        )}
 
         <section className="products-section">
           <div className="section-head">
@@ -296,11 +310,14 @@ const ShopView = () => {
         /* HERO CARD */
         .hero-slider { margin-bottom: 100px; }
         .hero-card { background: #151113; border: 1px solid rgba(255,255,255,0.05); border-radius: 40px; padding: 60px; display: flex; align-items: center; justify-content: space-between; position: relative; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.6); }
+        .hero-tag { color: var(--primary); font-size: 11px; font-weight: 900; letter-spacing: 3px; margin-bottom: 15px; }
         .hero-info h2 { font-size: 48px; font-weight: 900; margin-bottom: 20px; letter-spacing: -2px; }
         .hero-info p { color: #888; font-size: 16px; margin-bottom: 45px; max-width: 380px; line-height: 1.7; }
-        .hero-price-row { display: flex; align-items: center; gap: 25px; }
+        .hero-price-row { display: flex; align-items: center; gap: 25px; margin-top: 20px; }
         .price-pill { background: var(--primary); padding: 15px 35px; border-radius: 50px; font-weight: 900; font-size: 22px; box-shadow: 0 15px 40px rgba(0,0,0,0.5); }
         .old-price { text-decoration: line-through; color: #444; font-size: 18px; font-weight: 800; }
+        .hero-buy-btn { background: #fff; color: #000; border: none; padding: 15px 40px; border-radius: 50px; font-weight: 900; font-size: 14px; cursor: pointer; transition: 0.3s; box-shadow: 0 10px 30px rgba(255,255,255,0.1); }
+        .hero-buy-btn:hover { background: var(--primary); color: #fff; transform: scale(1.05); box-shadow: 0 0 30px var(--primary); }
         .hero-visual { position: relative; width: 450px; }
         .car-img { width: 100%; position: relative; z-index: 2; transform: scale(1.4) translateY(15px); filter: drop-shadow(0 30px 60px rgba(0,0,0,0.9)); }
         .hero-glow { position: absolute; inset: 0; background: radial-gradient(circle, var(--primary) 0%, transparent 75%); opacity: 0.35; filter: blur(60px); }
