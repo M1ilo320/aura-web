@@ -238,9 +238,10 @@ const ShopView = () => {
 
         .vertical-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.05); }
 
-        .ticker-section { flex: 1; overflow: hidden; position: relative; }
-        .ticker-track { display: flex; gap: 40px; animation: scrollTicker 40s linear infinite; width: max-content; }
-        .purchase-item { display: flex; align-items: center; gap: 12px; min-width: 200px; }
+        .ticker-section { flex: 1; overflow: hidden; padding-left: 20px; }
+        .ticker-track { display: flex; gap: 25px; overflow-x: auto; }
+        .ticker-track::-webkit-scrollbar { display: none; }
+        .purchase-item { display: flex; align-items: center; gap: 12px; }
         .purchase-item img { width: 34px; height: 34px; border-radius: 6px; }
         .p-details .p-name { font-size: 11px; font-weight: 800; color: #44aaff; display: block; }
         .p-details .p-product { font-size: 11px; font-weight: 800; color: #fff; }
