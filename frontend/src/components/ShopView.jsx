@@ -303,18 +303,18 @@ const ShopView = () => {
         /* HERO HEADER */
         .main-scroll { max-width: 1100px; margin: 0 auto; padding-top: 80px; }
         .hero-header { text-align: center; margin-bottom: 60px; }
-        .badge-mini { background: #C9CED6; color: #000; display: inline-block; padding: 5px 15px; border-radius: 6px; font-size: 10px; font-weight: 900; margin-bottom: 20px; letter-spacing: 1px; }
+        .badge-mini { background: var(--primary); color: #fff; display: inline-block; padding: 5px 15px; border-radius: 6px; font-size: 10px; font-weight: 900; margin-bottom: 20px; letter-spacing: 1px; }
         .hero-header h1 { font-size: 56px; font-weight: 900; margin: 0; letter-spacing: -4px; line-height: 1; }
         .hero-header p { color: #888; font-size: 16px; margin-top: 20px; }
  
         /* HERO CARD */
         .hero-slider { margin-bottom: 100px; }
-        .hero-card { background: #151113; border: 1px solid rgba(255,255,255,0.05); border-radius: 40px; padding: 60px; display: flex; align-items: center; justify-content: space-between; position: relative; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.6); }
-        .hero-tag { color: #C9CED6; font-size: 11px; font-weight: 900; letter-spacing: 3px; margin-bottom: 15px; opacity: 0.8; }
+        .hero-card { background: #151113; border: 1px solid rgba(201, 206, 214, 0.2); border-radius: 40px; padding: 60px; display: flex; align-items: center; justify-content: space-between; position: relative; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.6); }
+        .hero-tag { color: var(--primary); font-size: 11px; font-weight: 900; letter-spacing: 3px; margin-bottom: 15px; }
         .hero-info h2 { font-size: 48px; font-weight: 900; margin-bottom: 20px; letter-spacing: -2px; }
         .hero-info p { color: #888; font-size: 16px; margin-bottom: 45px; max-width: 380px; line-height: 1.7; }
         .hero-price-row { display: flex; align-items: center; gap: 25px; margin-top: 20px; }
-        .price-pill { background: rgba(201, 206, 214, 0.05); border: 1px solid rgba(201, 206, 214, 0.2); color: #C9CED6; padding: 15px 35px; border-radius: 50px; font-weight: 900; font-size: 22px; box-shadow: 0 15px 40px rgba(0,0,0,0.5); }
+        .price-pill { background: var(--primary); padding: 15px 35px; border-radius: 50px; font-weight: 900; font-size: 22px; box-shadow: 0 15px 40px rgba(0,0,0,0.5); }
         .old-price { text-decoration: line-through; color: #444; font-size: 18px; font-weight: 800; }
         .hero-buy-btn { background: #fff; color: #000; border: none; padding: 15px 40px; border-radius: 50px; font-weight: 900; font-size: 14px; cursor: pointer; transition: 0.3s; box-shadow: 0 10px 30px rgba(255,255,255,0.1); }
         .hero-buy-btn:hover { background: var(--primary); color: #fff; transform: scale(1.05); box-shadow: 0 0 30px var(--primary); }
@@ -323,23 +323,23 @@ const ShopView = () => {
         .hero-glow { position: absolute; inset: 0; background: radial-gradient(circle, var(--primary) 0%, transparent 75%); opacity: 0.35; filter: blur(60px); }
  
         /* PRODUCTS SECTION */
-        .products-section { background: #120e10; border: 1px solid rgba(255,255,255,0.05); border-radius: 50px; padding: 80px; margin-bottom: 120px; box-shadow: 0 60px 120px rgba(0,0,0,0.4); }
+        .products-section { background: #120e10; border: 1px solid rgba(201, 206, 214, 0.15); border-radius: 50px; padding: 80px; margin-bottom: 120px; box-shadow: 0 60px 120px rgba(0,0,0,0.4); }
         .section-head { text-align: center; margin-bottom: 70px; }
         .section-head h3 { font-size: 32px; font-weight: 900; margin-bottom: 15px; letter-spacing: -1.5px; }
-        .section-head p { font-size: 12px; font-weight: 900; color: #C9CED6; opacity: 0.7; letter-spacing: 3px; }
+        .section-head p { font-size: 12px; font-weight: 900; color: #22c55e; letter-spacing: 3px; }
  
         .cat-tabs { display: flex; gap: 20px; justify-content: center; margin-bottom: 70px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 40px; }
         .cat-tabs button { background: transparent; border: none; color: #444; font-weight: 800; font-size: 14px; cursor: pointer; padding: 10px 30px; transition: 0.3s; position: relative; }
         .cat-tabs button.active { color: #fff; }
-        .cat-tabs button.active::after { content: ''; position: absolute; bottom: -40px; left: 0; right: 0; height: 3px; background: #C9CED6; box-shadow: 0 0 25px #C9CED6; }
+        .cat-tabs button.active::after { content: ''; position: absolute; bottom: -40px; left: 0; right: 0; height: 3px; background: var(--primary); box-shadow: 0 0 25px var(--primary); }
  
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; }
-        .item-card { background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.04); border-radius: 35px; padding: 35px; transition: 0.4s; position: relative; overflow: hidden; }
-        .item-card:hover { border-color: #C9CED6; transform: translateY(-12px); background: rgba(255,255,255,0.03); box-shadow: 0 40px 80px rgba(0,0,0,0.6); }
+        .item-card { background: rgba(255,255,255,0.01); border: 1px solid rgba(201, 206, 214, 0.1); border-radius: 35px; padding: 35px; transition: 0.4s; position: relative; overflow: hidden; }
+        .item-card:hover { border-color: var(--primary); transform: translateY(-12px); background: rgba(255,255,255,0.03); box-shadow: 0 40px 80px rgba(0,0,0,0.6); }
         
         .card-top { display: flex; justify-content: center; margin-bottom: 30px; position: relative; height: 80px; align-items: center; }
         .p-badge-wrap { position: absolute; top: -10px; left: -10px; }
-        .p-badge { background: #C9CED6; font-size: 9px; font-weight: 950; padding: 5px 12px; border-radius: 8px; color: #000; letter-spacing: 0.5px; }
+        .p-badge { background: #22c55e; font-size: 9px; font-weight: 950; padding: 5px 12px; border-radius: 8px; color: #000; letter-spacing: 0.5px; }
         
         .item-icon { font-size: 46px; filter: drop-shadow(0 15px 20px rgba(0,0,0,0.4)); }
         .item-info h4 { font-size: 18px; font-weight: 800; text-align: center; margin: 0 0 30px; }
