@@ -67,6 +67,12 @@ const ShopView = () => {
     return () => clearInterval(interval);
   }, [currentSlug]);
 
+  useEffect(() => {
+    if (data.shop) {
+      document.title = `${data.shop.name} - Sklep AuraStore`;
+    }
+  }, [data.shop]);
+
   const handleSteamLogin = () => {
     const origin = window.location.href;
     window.location.href = `${BACKEND_URL}/api/auth/steam?origin=${encodeURIComponent(origin)}`;

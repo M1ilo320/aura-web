@@ -8,6 +8,7 @@ const HomeView = () => {
   const BACKEND_URL = import.meta.env.VITE_API_URL || "https://aura-api-5tbi.onrender.com";
 
   useEffect(() => {
+    document.title = "AuraStore - Wybierz Serwer";
     fetch(`${BACKEND_URL}/api/shops`)
       .then(res => res.json())
       .then(data => {
