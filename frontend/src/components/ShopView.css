@@ -240,9 +240,9 @@ body {
 
 /* HERO HEADER */
 .main-scroll {
-  max-width: 1000px;
+  max-width: 850px;
   margin: 0 auto;
-  padding-top: 60px;
+  padding-top: 40px;
 }
 
 .hero-header {
@@ -291,16 +291,16 @@ body {
 .hero-card {
   background: #161618;
   border: 2px solid #C9CED6;
-  border-radius: 40px;
-  padding: 40px 60px;
+  border-radius: 35px;
+  padding: 25px 45px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
   width: 100%;
-  min-height: 320px;
+  min-height: 240px;
 }
 
 .hero-info {
@@ -318,19 +318,19 @@ body {
 }
 
 .hero-info h2 {
-  font-size: 42px;
+  font-size: 30px;
   font-weight: 900;
-  margin: 0 0 15px 0;
-  letter-spacing: -2px;
+  margin: 0 0 10px 0;
+  letter-spacing: -1.5px;
   color: #fff;
   text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .hero-desc {
   color: rgba(255, 255, 255, 0.4);
-  font-size: 14px;
-  margin-bottom: 30px;
-  max-width: 380px;
+  font-size: 12px;
+  margin-bottom: 20px;
+  max-width: 320px;
   line-height: 1.5;
 }
 
@@ -344,13 +344,13 @@ body {
   background: var(--primary);
   color: #fff;
   border: none;
-  padding: 14px 35px;
-  border-radius: 18px;
+  padding: 10px 25px;
+  border-radius: 12px;
   font-weight: 900;
-  font-size: 18px;
+  font-size: 15px;
   cursor: pointer;
   transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .hero-buy-btn-premium:hover {
@@ -368,8 +368,8 @@ body {
 
 .hero-visual {
   position: relative;
-  width: 350px;
-  height: 220px;
+  width: 260px;
+  height: 160px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -405,8 +405,8 @@ body {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.05);
   color: #fff;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 12px;
   cursor: pointer;
   z-index: 10;
@@ -424,11 +424,11 @@ body {
 }
 
 .slider-arrow.prev {
-  left: -60px;
+  left: -50px;
 }
 
 .slider-arrow.next {
-  right: -60px;
+  right: -50px;
 }
 
 .hero-dots {
@@ -460,22 +460,22 @@ body {
 .products-section {
   background: #161618;
   border: 2px solid #C9CED6;
-  border-radius: 40px;
-  padding: 40px 60px;
-  margin-bottom: 80px;
-  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+  border-radius: 35px;
+  padding: 30px 45px;
+  margin-bottom: 60px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
 }
 
 .section-head {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .section-head h3 {
-  font-size: 26px;
+  font-size: 20px;
   font-weight: 900;
-  margin-bottom: 10px;
-  letter-spacing: -1px;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
 }
 
 .section-head p {
@@ -487,11 +487,11 @@ body {
 
 .cat-tabs {
   display: flex;
-  gap: 15px;
+  gap: 12px;
   justify-content: center;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  padding-bottom: 30px;
+  padding-bottom: 20px;
 }
 
 .cat-tabs button {
@@ -523,15 +523,15 @@ body {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 15px;
 }
 
 .item-card {
   background: #1a1a1c;
   border: 1px solid rgba(201, 206, 214, 0.3);
-  border-radius: 25px;
-  padding: 25px;
+  border-radius: 20px;
+  padding: 20px;
   transition: 0.4s;
   position: relative;
   overflow: hidden;
@@ -547,9 +547,9 @@ body {
 .card-top {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   position: relative;
-  height: 60px;
+  height: 50px;
   align-items: center;
 }
 
@@ -570,15 +570,15 @@ body {
 }
 
 .item-icon {
-  font-size: 38px;
-  filter: drop-shadow(0 15px 20px rgba(0, 0, 0, 0.4));
+  font-size: 30px;
+  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.4));
 }
 
 .item-info h4 {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 800;
   text-align: center;
-  margin: 0 0 20px;
+  margin: 0 0 15px;
 }
 
 .price-row {
@@ -590,7 +590,7 @@ body {
 }
 
 .price {
-  font-size: 19px;
+  font-size: 16px;
   font-weight: 900;
   color: #fff;
 }
@@ -599,13 +599,13 @@ body {
   background: var(--primary);
   border: none;
   color: #fff;
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
   cursor: pointer;
   font-weight: 900;
   transition: 0.3s;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .buy-btn:hover {
