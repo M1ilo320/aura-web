@@ -52,7 +52,14 @@ const ShopView = () => {
         .then(json => {
           if (json.shop) {
             setData(json);
-            document.documentElement.style.setProperty('--primary', json.shop.accent_color || '#C9CED6');
+            const accent = json.shop.accent_color || '#C9CED6';
+            document.documentElement.style.setProperty('--primary', accent);
+            
+            // Konwersja HEX na RGB dla rgba() w CSS
+            const r = parseInt(accent.slice(1, 3), 16);
+            const g = parseInt(accent.slice(3, 5), 16);
+            const b = parseInt(accent.slice(5, 7), 16);
+            document.documentElement.style.setProperty('--primary-rgb', `${r}, ${g}, ${b}`);
           } else {
             setData(prev => ({ ...prev, shop: null }));
           }

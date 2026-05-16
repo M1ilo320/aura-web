@@ -27,11 +27,11 @@ body {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: #202020;
+  background: #0b0a0b;
   background-image: radial-gradient(80% 70% at 50% 50%,
-      rgba(var(--primary), 0.15) 0%,
-      rgba(var(--primary), 0.05) 55%,
-      rgba(var(--primary), 0) 90%);
+      rgba(var(--primary-rgb), 0.15) 0%,
+      rgba(var(--primary-rgb), 0.05) 55%,
+      rgba(var(--primary-rgb), 0) 90%);
 }
 
 /* NAVBAR */
