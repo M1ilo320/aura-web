@@ -160,9 +160,10 @@ body {
 
 /* ACTIVITY STRIP */
 .activity-strip {
-  height: 60px;
-  background: rgba(0, 0, 0, 0.5);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  height: 80px;
+  background: rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
 }
 
 .strip-container {
@@ -174,18 +175,37 @@ body {
 }
 
 .stats {
+  height: 100%;
   padding: 0 40px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 11px;
-  color: #888;
-  white-space: nowrap;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.stats b {
+.stats-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.stats-dot-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stats-dot-wrap b {
+  font-size: 20px;
+  font-weight: 900;
   color: #fff;
-  font-size: 14px;
+}
+
+.stats-label {
+  font-size: 9px;
+  font-weight: 900;
+  color: #555;
+  letter-spacing: 1px;
 }
 
 .dot {
@@ -205,37 +225,50 @@ body {
 .ticker-wrapper {
   flex: 1;
   overflow: hidden;
-  padding-left: 30px;
+  padding-left: 40px;
 }
 
 .ticker-content {
   display: flex;
-  gap: 40px;
+  gap: 50px;
+  animation: ticker 30s linear infinite;
+}
+
+@keyframes ticker {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
 }
 
 .t-item {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   min-width: max-content;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 8px 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .t-item img {
-  width: 26px;
-  height: 26px;
-  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 .t-name {
   font-size: 11px;
-  font-weight: 800;
-  color: var(--primary);
+  font-weight: 900;
+  color: #fff;
+  text-transform: uppercase;
 }
 
 .t-prod {
   font-size: 11px;
-  font-weight: 800;
-  color: #fff;
+  font-weight: 900;
+  color: var(--primary);
+  text-transform: uppercase;
 }
 
 /* HERO HEADER */

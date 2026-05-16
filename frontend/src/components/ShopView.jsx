@@ -54,7 +54,7 @@ const ShopView = () => {
             setData(json);
             const accent = json.shop.accent_color || '#C9CED6';
             document.documentElement.style.setProperty('--primary', accent);
-            
+
             // Konwersja HEX na RGB dla rgba() w CSS
             const r = parseInt(accent.slice(1, 3), 16);
             const g = parseInt(accent.slice(3, 5), 16);
@@ -164,8 +164,13 @@ const ShopView = () => {
       <section className="activity-strip">
         <div className="strip-container">
           <div className="stats">
-            <span className="dot"></span>
-            <b>{onlinePlayers}</b> GRACZY ONLINE
+            <div className="stats-main">
+              <div className="stats-dot-wrap">
+                <span className="dot"></span>
+                <b>{onlinePlayers}</b>
+              </div>
+              <span className="stats-label">GRACZY ONLINE</span>
+            </div>
           </div>
           <div className="divider"></div>
           <div className="ticker-wrapper">
@@ -192,8 +197,8 @@ const ShopView = () => {
         {data.products.some(p => p.category?.toUpperCase() === 'PAKIETY' || p.name.toUpperCase().includes('ZESTAW')) && (
           <section className="hero-slider">
             {(() => {
-              const heroProducts = data.products.filter(p => 
-                p.category?.toUpperCase() === 'PAKIETY' || 
+              const heroProducts = data.products.filter(p =>
+                p.category?.toUpperCase() === 'PAKIETY' ||
                 p.name.toUpperCase().includes('ZESTAW')
               );
               const currentHero = heroProducts[currentHeroIndex];
@@ -209,20 +214,20 @@ const ShopView = () => {
                   {heroProducts.length > 1 && (
                     <>
                       <button className="slider-arrow prev" onClick={prevHero}>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
                       </button>
                       <button className="slider-arrow next" onClick={nextHero}>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6" /></svg>
                       </button>
                     </>
                   )}
-                  
+
                   <div className="hero-card">
                     <div className="hero-info">
                       <div className="hero-tag">POLECANY PAKIET</div>
                       <h2>{displayTitle}</h2>
                       <p className="hero-desc">{currentHero.description || "Zestaw zawiera unikalne przedmioty i rangi dostępne tylko w tym pakiecie."}</p>
-                      
+
                       <div className="hero-price-row">
                         <button className="hero-buy-btn-premium" onClick={() => handlePurchase(currentHero)}>
                           {currentHero.price} zł
@@ -232,7 +237,7 @@ const ShopView = () => {
                         )}
                       </div>
                     </div>
-                    
+
                     <div className="hero-visual">
                       <img src={currentHero.image_url || "/hero_bundle.png"} alt="Hero bundle" className="hero-img-main" />
                       <div className="hero-glow-premium"></div>
@@ -241,8 +246,8 @@ const ShopView = () => {
                     {heroProducts.length > 1 && (
                       <div className="hero-dots">
                         {heroProducts.map((_, idx) => (
-                          <div 
-                            key={idx} 
+                          <div
+                            key={idx}
                             className={`dot ${idx === currentHeroIndex ? 'active' : ''}`}
                             onClick={() => setCurrentHeroIndex(idx)}
                           ></div>
