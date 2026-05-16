@@ -281,16 +281,25 @@ const ShopView = () => {
 
           <div className="grid">
             {filteredProducts.map(p => (
-              <div key={p.id} className="item-card">
+              <div
+                key={p.id}
+                className="item-card"
+                onClick={() => handlePurchase(p)}
+              >
                 <div className="card-top">
-                  <div className="item-icon">{p.category === 'WALUTA' ? '💰' : (p.category === 'RANGI' ? '👑' : '📦')}</div>
-                  {p.price > 100 && <div className="p-badge-wrap"><span className="p-badge">OKAZJA</span></div>}
+                  <div className="item-icon">
+                    {p.category === 'WALUTA' ? '💰' : (p.category === 'RANGI' ? '👑' : '📦')}
+                  </div>
+                  {p.price > 100 && (
+                    <div className="p-badge-wrap">
+                      <span className="p-badge">OKAZJA</span>
+                    </div>
+                  )}
                 </div>
                 <div className="item-info">
                   <h4>{p.name}</h4>
                   <div className="price-row">
                     <span className="price">{p.price} zł</span>
-                    <button className="buy-btn" onClick={() => handlePurchase(p)}>+</button>
                   </div>
                 </div>
               </div>

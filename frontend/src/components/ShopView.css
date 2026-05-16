@@ -28,7 +28,7 @@ body {
   inset: 0;
   z-index: -1;
   background: #080808;
-  background-image: 
+  background-image:
     radial-gradient(120% 120% at 50% 50%,
       rgba(var(--primary-rgb), 0.35) 0%,
       rgba(var(--primary-rgb), 0.1) 45%,
@@ -245,8 +245,13 @@ body {
 }
 
 @keyframes ticker {
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
 }
 
 .t-item {
@@ -601,12 +606,14 @@ body {
   flex-direction: column;
   align-items: center;
   text-align: center;
+  cursor: pointer;
 }
 
 .item-card:hover {
-  border-color: rgba(var(--primary-rgb), 0.3);
+  border-color: rgba(var(--primary-rgb), 0.5);
   transform: translateY(-5px);
   background: #1a1a1c;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
 }
 
 .card-top {
@@ -673,26 +680,7 @@ body {
   color: var(--primary);
 }
 
-.buy-btn {
-  margin-top: 15px;
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #fff;
-  width: auto;
-  padding: 8px 25px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 800;
-  transition: 0.3s;
-  font-size: 11px;
-  text-transform: uppercase;
-}
 
-.buy-btn:hover {
-  background: var(--primary);
-  border-color: var(--primary);
-  transform: none;
-}
 
 .footer {
   text-align: center;
