@@ -1,11 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
 
 :root {
-  --primary: #C9CED6; /* AuraStore Silver */
+  --primary: #C9CED6;
   --primary-rgb: 201, 206, 214;
-  --bg-deep: #080808; /* User's deep black background */
-  --panel-bg: #111113; /* Dark panel */
-  --card-bg: #161618;
+  --bg-deep: #0b0b0e;
+  --panel-bg: #15151a; /* Lighter than background for high contrast */
   --card-border: rgba(255, 255, 255, 0.05);
 }
 
@@ -26,24 +25,17 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
-  background: #080808;
+  background: radial-gradient(circle at 50% 50%, #15151f 0%, #0b0b0e 100%);
 }
 
-/* Premium Mesh Gradient Background for AuraStore */
 .home-wrapper::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image:
-    radial-gradient(120% 120% at 50% 50%,
-      rgba(var(--primary-rgb), 0.08) 0%,
-      rgba(var(--primary-rgb), 0.02) 45%,
-      transparent 80%),
-    radial-gradient(100% 100% at 50% 0%,
-      rgba(var(--primary-rgb), 0.05) 0%,
-      transparent 70%);
-  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='2000' height='2000' viewBox='0 0 2000 2000' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 1000 Q 500 800 1000 1000 T 2000 1000' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='1.5'/%3E%3Cpath d='M0 1200 Q 500 1000 1000 1200 T 2000 1200' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='1.5'/%3E%3Cpath d='M0 800 Q 500 600 1000 800 T 2000 800' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='1.5'/%3E%3Cpath d='M0 1400 Q 500 1200 1000 1400 T 2000 1400' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='1.5'/%3E%3Cpath d='M0 600 Q 500 400 1000 600 T 2000 600' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-size: cover;
   pointer-events: none;
+  z-index: 0;
 }
 
 /* NAVBAR */
@@ -52,60 +44,49 @@ body {
   display: flex;
   align-items: center;
   z-index: 10;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .home-nav-container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 40px;
+  padding: 0 60px;
 }
 
 .home-logo img {
-  height: 40px;
-  filter: drop-shadow(0 0 10px rgba(var(--primary-rgb), 0.2));
+  height: 48px;
 }
 
 .home-socials {
   display: flex;
-  gap: 15px;
+  gap: 25px;
+  align-items: center;
 }
 
 .s-icon {
   text-decoration: none;
-  font-size: 20px;
-  background: rgba(255, 255, 255, 0.03);
-  width: 45px;
-  height: 45px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 22px;
   color: #fff;
+  opacity: 0.5;
+  transition: 0.3s;
 }
 
 .s-icon:hover {
+  opacity: 1;
   transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
 }
 
-.s-icon.discord:hover { 
-  background: #5865F2; 
-  border-color: #5865F2;
-  box-shadow: 0 10px 20px rgba(88, 101, 242, 0.3);
-}
-.s-icon.tiktok:hover { 
-  background: #000; 
-  border-color: #ff0050;
-  box-shadow: 0 10px 20px rgba(255, 0, 80, 0.3);
-}
+.s-icon.discord:hover { color: #5865F2; }
+.s-icon.tiktok:hover { color: #ff0050; }
+.s-icon.instagram:hover { color: #E1306C; }
 
-/* MAIN PANEL */
+/* PANEL - THE "WYBIERZ SERWER" BOX */
 .home-main {
   flex: 1;
   display: flex;
@@ -118,28 +99,31 @@ body {
 .selector-panel {
   background: var(--panel-bg);
   width: 100%;
-  max-width: 1100px; /* Fixed width to prevent stretching */
+  max-width: 1100px;
   border-radius: 40px;
   padding: 80px 60px;
   text-align: center;
-  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.02);
+  box-shadow: 0 50px 100px rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.05); /* Make the box visible */
 }
 
 .selector-panel h1 {
-  font-size: 38px;
+  font-size: 52px; /* Extra bold and large like InDrop */
   font-weight: 900;
-  margin-bottom: 12px;
-  letter-spacing: -1.5px;
+  margin-bottom: 15px;
+  letter-spacing: -2.5px;
+  color: #fff;
+  text-transform: none;
 }
 
 .selector-panel p {
-  color: rgba(255, 255, 255, 0.3);
-  font-size: 14px;
-  margin-bottom: 60px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 16px;
+  margin-bottom: 70px;
+  font-weight: 500;
 }
 
-/* SERVER GRID - 5 COLUMNS LIKE SCREENSHOT */
+/* GRID - THE 5 COLUMNS PART */
 .server-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -148,32 +132,32 @@ body {
 
 .server-card {
   text-decoration: none;
-  background: var(--card-bg);
+  background: transparent;
   border: 1px solid var(--card-border);
   border-radius: 20px;
-  padding: 30px 10px;
+  height: 250px; /* Rectangular cards */
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  padding: 20px;
   transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  height: 200px; /* Rectangular aspect ratio */
-  justify-content: center;
 }
 
 .server-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(var(--primary-rgb), 0.2);
-  background: #1c1c20;
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-8px);
 }
 
 .server-icon {
-  width: 75px;
-  height: 75px;
-  margin-bottom: 25px;
+  width: 100px;
+  height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 35px;
 }
 
 .server-icon img {
@@ -182,26 +166,19 @@ body {
   object-fit: contain;
 }
 
-/* PILL BADGE LIKE SCREENSHOT BUT WITH USER COLORS */
+/* THE PILL BADGE */
 .server-name-badge {
-  background: #000;
-  color: #fff;
-  padding: 5px 15px;
-  border-radius: 100px;
-  font-size: 10px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  position: absolute;
-  bottom: 15px;
-  transition: 0.3s;
-}
-
-.server-card:hover .server-name-badge {
-  background: var(--primary);
+  background: #fff;
   color: #000;
-  border-color: var(--primary);
+  padding: 7px 22px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  position: absolute;
+  bottom: 25px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
 .home-loading {
@@ -209,18 +186,17 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-deep);
-  color: #fff;
   font-weight: 900;
   letter-spacing: 5px;
 }
 
-@media (max-width: 1000px) {
+/* MOBILE FIXES */
+@media (max-width: 1100px) {
   .server-grid { grid-template-columns: repeat(3, 1fr); }
   .selector-panel { padding: 50px 30px; }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .server-grid { grid-template-columns: repeat(2, 1fr); }
-  .selector-panel h1 { font-size: 28px; }
+  .selector-panel h1 { font-size: 38px; }
 }
