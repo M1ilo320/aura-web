@@ -289,8 +289,8 @@ body {
 }
 
 .hero-card {
-  background: #161618;
-  border: 2px solid #C9CED6;
+  background: #16161654;
+  border: 1px solid var(--primary);
   border-radius: 40px;
   padding: 40px 70px;
   display: flex;
@@ -298,7 +298,6 @@ body {
   justify-content: space-between;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
   width: 100%;
   min-height: 300px;
 }
@@ -459,12 +458,11 @@ body {
 
 /* PRODUCTS SECTION */
 .products-section {
-  background: #161618;
-  border: 2px solid #C9CED6;
+  background: #16161654;
+  border: 1px solid var(--primary);
   border-radius: 40px;
   padding: 40px 60px;
   margin-bottom: 80px;
-  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
 }
 
 .section-head {
