@@ -289,7 +289,7 @@ body {
 }
 
 .hero-card {
-  background: #16161654;
+  background: #161616;
   border: 1px solid var(--primary);
   border-radius: 40px;
   padding: 40px 70px;
@@ -458,7 +458,7 @@ body {
 
 /* PRODUCTS SECTION */
 .products-section {
-  background: #16161654;
+  background: #161616;
   border: 1px solid var(--primary);
   border-radius: 40px;
   padding: 40px 60px;
