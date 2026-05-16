@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
 
 :root {
-  --primary: #C9CED6;
+  --primary: #c9ced6;
   --primary-rgb: 201, 206, 214;
   --bg-deep: #0b0b0e;
-  --panel-bg: #15151a; /* Lighter than background for high contrast */
+  --panel-bg: #15151a;
+  /* Lighter than background for high contrast */
   --card-border: rgba(255, 255, 255, 0.05);
 }
 
@@ -25,17 +26,17 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
-  background: radial-gradient(circle at 50% 50%, #15151f 0%, #0b0b0e 100%);
-}
-
-.home-wrapper::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg width='2000' height='2000' viewBox='0 0 2000 2000' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 1000 Q 500 800 1000 1000 T 2000 1000' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='1.5'/%3E%3Cpath d='M0 1200 Q 500 1000 1000 1200 T 2000 1200' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='1.5'/%3E%3Cpath d='M0 800 Q 500 600 1000 800 T 2000 800' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='1.5'/%3E%3Cpath d='M0 1400 Q 500 1200 1000 1400 T 2000 1400' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='1.5'/%3E%3Cpath d='M0 600 Q 500 400 1000 600 T 2000 600' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='1.5'/%3E%3C/svg%3E");
+  background: #080808;
+  background-image:
+    url("data:image/svg+xml,%3Csvg width='2000' height='2000' viewBox='0 0 2000 2000' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 1000 Q 500 800 1000 1000 T 2000 1000' fill='none' stroke='rgba(255,255,255,0.02)' stroke-width='1.5'/%3E%3Cpath d='M0 1200 Q 500 1000 1000 1200 T 2000 1200' fill='none' stroke='rgba(255,255,255,0.02)' stroke-width='1.5'/%3E%3Cpath d='M0 800 Q 500 600 1000 800 T 2000 800' fill='none' stroke='rgba(255,255,255,0.02)' stroke-width='1.5'/%3E%3Cpath d='M0 1400 Q 500 1200 1000 1400 T 2000 1400' fill='none' stroke='rgba(255,255,255,0.02)' stroke-width='1.5'/%3E%3Cpath d='M0 600 Q 500 400 1000 600 T 2000 600' fill='none' stroke='rgba(255,255,255,0.02)' stroke-width='1.5'/%3E%3C/svg%3E"),
+    radial-gradient(120% 120% at 50% 50%,
+      rgba(var(--primary-rgb), 0.25) 0%,
+      rgba(var(--primary-rgb), 0.05) 45%,
+      rgba(var(--primary-rgb), 0) 80%),
+    radial-gradient(100% 100% at 50% 0%,
+      rgba(var(--primary-rgb), 0.1) 0%,
+      transparent 70%);
   background-size: cover;
-  pointer-events: none;
-  z-index: 0;
 }
 
 /* NAVBAR */
@@ -82,9 +83,17 @@ body {
   transform: translateY(-3px);
 }
 
-.s-icon.discord:hover { color: #5865F2; }
-.s-icon.tiktok:hover { color: #ff0050; }
-.s-icon.instagram:hover { color: #E1306C; }
+.s-icon.discord:hover {
+  color: #5865F2;
+}
+
+.s-icon.tiktok:hover {
+  color: #ff0050;
+}
+
+.s-icon.instagram:hover {
+  color: #E1306C;
+}
 
 /* PANEL - THE "WYBIERZ SERWER" BOX */
 .home-main {
@@ -104,11 +113,13 @@ body {
   padding: 80px 60px;
   text-align: center;
   box-shadow: 0 50px 100px rgba(0, 0, 0, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.05); /* Make the box visible */
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  /* Make the box visible */
 }
 
 .selector-panel h1 {
-  font-size: 52px; /* Extra bold and large like InDrop */
+  font-size: 52px;
+  /* Extra bold and large like InDrop */
   font-weight: 900;
   margin-bottom: 15px;
   letter-spacing: -2.5px;
@@ -135,7 +146,8 @@ body {
   background: transparent;
   border: 1px solid var(--card-border);
   border-radius: 20px;
-  height: 250px; /* Rectangular cards */
+  height: 250px;
+  /* Rectangular cards */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -178,7 +190,7 @@ body {
   letter-spacing: 0.8px;
   position: absolute;
   bottom: 25px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .home-loading {
@@ -192,11 +204,21 @@ body {
 
 /* MOBILE FIXES */
 @media (max-width: 1100px) {
-  .server-grid { grid-template-columns: repeat(3, 1fr); }
-  .selector-panel { padding: 50px 30px; }
+  .server-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .selector-panel {
+    padding: 50px 30px;
+  }
 }
 
 @media (max-width: 768px) {
-  .server-grid { grid-template-columns: repeat(2, 1fr); }
-  .selector-panel h1 { font-size: 38px; }
+  .server-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .selector-panel h1 {
+    font-size: 38px;
+  }
 }
