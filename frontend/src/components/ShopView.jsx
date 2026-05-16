@@ -79,7 +79,14 @@ const ShopView = () => {
 
   useEffect(() => {
     if (data.shop) {
-      document.title = `${data.shop.name} - Sklep AuraStore`;
+      document.title = `${data.shop.name} - Sklep`;
+
+      // Dynamic Favicon Update
+      const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+      link.type = 'image/x-icon';
+      link.rel = 'shortcut icon';
+      link.href = data.shop.logo_url || '/aura_logo.png';
+      document.getElementsByTagName('head')[0].appendChild(link);
     }
   }, [data.shop]);
 
@@ -137,7 +144,7 @@ const ShopView = () => {
   const primaryRgb = shop.accent_color ? hexToRgb(shop.accent_color) : '201, 206, 214';
 
   return (
-    <div className="app-wrapper" style={{ 
+    <div className="app-wrapper" style={{
       '--primary': shop.accent_color || '#C9CED6',
       '--primary-rgb': primaryRgb
     }}>
@@ -186,7 +193,7 @@ const ShopView = () => {
           </div>
           <div className="divider"></div>
           <div className="ticker-wrapper">
-            <div className={`ticker-content ${recent && recent.length > 0 ? 'scrolling' : 'static'}`}>
+            <div className="ticker-content static">
               {recent && recent.length > 0 ? recent.map((r, i) => (
                 <div key={i} className="t-item">
                   <img src={r.avatar} alt="" />
@@ -336,7 +343,7 @@ const ShopView = () => {
               <div className="success-icon-wrap">
                 <div className="success-check">✓</div>
               </div>
-              
+
               <div className="modal-user">
                 <img src={steamProfile?.avatar} alt="" className="modal-avatar" />
                 <div className="modal-user-info">
