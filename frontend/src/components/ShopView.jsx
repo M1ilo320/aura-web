@@ -10,6 +10,7 @@ const ShopView = () => {
   const [userData, setUserData] = useState(null);
   const [steamProfile, setSteamProfile] = useState(null);
   const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
+  const [successModal, setSuccessModal] = useState({ show: false, product: null });
 
   const getSlug = () => {
     if (urlSlug) return urlSlug;
@@ -112,7 +113,7 @@ const ShopView = () => {
       .then(res => res.json())
       .then(json => {
         if (json.success) {
-          alert(`Sukces! Zakupiono ${product.name}. Odbierz nagrodę w grze.`);
+          setSuccessModal({ show: true, product: product });
         }
       });
   };
@@ -311,6 +312,38 @@ const ShopView = () => {
           <p>© 2024 {shop.name} Store. System by AuraStore.</p>
         </footer>
       </div>
+
+      {successModal.show && (
+        <div className="modal-overlay" onClick={() => setSuccessModal({ show: false, product: null })}>
+          <div className="success-modal" onClick={e => e.stopPropagation()}>
+            <div className="modal-glow"></div>
+            <div className="modal-content">
+              <div className="success-icon-wrap">
+                <div className="success-check">✓</div>
+              </div>
+              
+              <div className="modal-user">
+                <img src={steamProfile?.avatar} alt="" className="modal-avatar" />
+                <div className="modal-user-info">
+                  <span className="modal-nickname">{steamProfile?.nickname}</span>
+                  <span className="modal-action">DZIĘKUJEMY ZA ZAKUP!</span>
+                </div>
+              </div>
+
+              <div className="modal-product-box">
+                <span className="modal-product-label">ZAKUPIONY PRZEDMIOT</span>
+                <h3 className="modal-product-name">{successModal.product?.name}</h3>
+              </div>
+
+              <p className="modal-instruction">Twoje zamówienie zostało przekazane do realizacji. Przedmioty pojawią się w Twoim ekwipunku w ciągu kilku sekund.</p>
+
+              <button className="modal-close-btn" onClick={() => setSuccessModal({ show: false, product: null })}>
+                ROZUMIEM
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );
