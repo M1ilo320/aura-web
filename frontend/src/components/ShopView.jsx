@@ -356,8 +356,9 @@ const ShopView = () => {
         .hero-container { position: relative; display: flex; align-items: center; }
         
         .hero-card { 
-          background: #111217; 
-          border: 1px solid rgba(255,255,255,0.03); 
+          background: rgba(20, 20, 24, 0.7); 
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255,255,255,0.05); 
           border-radius: 40px; 
           padding: 80px 100px; 
           display: flex; 
@@ -365,7 +366,7 @@ const ShopView = () => {
           justify-content: space-between; 
           position: relative; 
           overflow: hidden; 
-          box-shadow: 0 40px 120px rgba(0,0,0,0.9);
+          box-shadow: 0 40px 120px rgba(0,0,0,0.5);
           width: 100%;
           min-height: 480px;
         }
@@ -377,7 +378,7 @@ const ShopView = () => {
 
         .hero-price-row { display: flex; align-items: center; gap: 30px; }
         .hero-buy-btn-premium { 
-          background: #ff4747; 
+          background: var(--primary); 
           color: #fff; 
           border: none; 
           padding: 20px 50px; 
@@ -386,12 +387,12 @@ const ShopView = () => {
           font-size: 22px; 
           cursor: pointer; 
           transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-          box-shadow: 0 15px 40px rgba(255, 71, 71, 0.25);
+          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
         }
         .hero-buy-btn-premium:hover { 
           transform: scale(1.05) translateY(-5px); 
-          filter: brightness(1.1); 
-          box-shadow: 0 20px 50px rgba(255, 71, 71, 0.4);
+          filter: brightness(1.2); 
+          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
         }
         
         .old-price { text-decoration: line-through; color: rgba(255,255,255,0.15); font-size: 20px; font-weight: 800; }
@@ -434,7 +435,7 @@ const ShopView = () => {
           z-index: 10;
         }
         .hero-dots .dot { width: 40px; height: 4px; background: rgba(255,255,255,0.1); border-radius: 10px; cursor: pointer; transition: 0.4s; }
-        .hero-dots .dot.active { background: #ff4747; width: 60px; box-shadow: 0 0 15px rgba(255, 71, 71, 0.5); }
+        .hero-dots .dot.active { background: var(--primary); width: 60px; box-shadow: 0 0 15px var(--primary); }
  
         /* PRODUCTS SECTION */
         .products-section { background: #161618; border: 2px solid #C9CED6; border-radius: 50px; padding: 80px; margin-bottom: 120px; box-shadow: 0 60px 120px rgba(0,0,0,0.5); }
