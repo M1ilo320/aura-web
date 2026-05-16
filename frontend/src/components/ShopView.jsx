@@ -289,7 +289,11 @@ const ShopView = () => {
               >
                 <div className="card-top">
                   <div className="item-icon">
-                    {p.category === 'WALUTA' ? '💰' : (p.category === 'RANGI' ? '👑' : '📦')}
+                    {p.image_url ? (
+                      <img src={p.image_url} alt={p.name} className="p-icon-img" />
+                    ) : (
+                      p.category === 'WALUTA' ? '💰' : (p.category === 'RANGI' ? '👑' : '📦')
+                    )}
                   </div>
                   {p.price > 100 && (
                     <div className="p-badge-wrap">
