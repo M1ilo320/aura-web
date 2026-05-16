@@ -106,14 +106,13 @@ body {
 }
 
 .selector-panel {
-  background: var(--panel-bg);
+  background: linear-gradient(180deg, #1a1a1c 0%, #161616 100%);
+  border: 1px solid rgba(var(--primary), 0.2);
   width: 100%;
   max-width: 1100px;
   border-radius: 40px;
   padding: 80px 60px;
   text-align: center;
-  box-shadow: 0 50px 100px rgba(0, 0, 0, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.05);
   /* Make the box visible */
 }
 
