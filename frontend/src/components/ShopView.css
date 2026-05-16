@@ -240,9 +240,9 @@ body {
 
 /* HERO HEADER */
 .main-scroll {
-  max-width: 1100px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding-top: 80px;
+  padding-top: 60px;
 }
 
 .hero-header {
@@ -278,7 +278,7 @@ body {
 
 /* HERO CARD */
 .hero-slider {
-  margin-bottom: 100px;
+  margin-bottom: 60px;
   position: relative;
 }
 
@@ -291,16 +291,16 @@ body {
 .hero-card {
   background: #161618;
   border: 2px solid #C9CED6;
-  border-radius: 50px;
-  padding: 80px 100px;
+  border-radius: 40px;
+  padding: 40px 60px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 60px 120px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
   width: 100%;
-  min-height: 480px;
+  min-height: 320px;
 }
 
 .hero-info {
@@ -310,28 +310,28 @@ body {
 
 .hero-tag {
   color: var(--primary);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 900;
-  letter-spacing: 4px;
-  margin-bottom: 25px;
+  letter-spacing: 3px;
+  margin-bottom: 15px;
   opacity: 0.8;
 }
 
 .hero-info h2 {
-  font-size: 64px;
+  font-size: 42px;
   font-weight: 900;
-  margin: 0 0 20px 0;
-  letter-spacing: -3px;
+  margin: 0 0 15px 0;
+  letter-spacing: -2px;
   color: #fff;
   text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .hero-desc {
   color: rgba(255, 255, 255, 0.4);
-  font-size: 16px;
-  margin-bottom: 50px;
-  max-width: 450px;
-  line-height: 1.6;
+  font-size: 14px;
+  margin-bottom: 30px;
+  max-width: 380px;
+  line-height: 1.5;
 }
 
 .hero-price-row {
@@ -344,13 +344,13 @@ body {
   background: var(--primary);
   color: #fff;
   border: none;
-  padding: 20px 50px;
-  border-radius: 24px;
+  padding: 14px 35px;
+  border-radius: 18px;
   font-weight: 900;
-  font-size: 22px;
+  font-size: 18px;
   cursor: pointer;
   transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .hero-buy-btn-premium:hover {
@@ -362,14 +362,14 @@ body {
 .old-price {
   text-decoration: line-through;
   color: rgba(255, 255, 255, 0.15);
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 800;
 }
 
 .hero-visual {
   position: relative;
-  width: 500px;
-  height: 300px;
+  width: 350px;
+  height: 220px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -424,11 +424,11 @@ body {
 }
 
 .slider-arrow.prev {
-  left: -75px;
+  left: -60px;
 }
 
 .slider-arrow.next {
-  right: -75px;
+  right: -60px;
 }
 
 .hero-dots {
@@ -460,22 +460,22 @@ body {
 .products-section {
   background: #161618;
   border: 2px solid #C9CED6;
-  border-radius: 50px;
-  padding: 80px;
-  margin-bottom: 120px;
-  box-shadow: 0 60px 120px rgba(0, 0, 0, 0.5);
+  border-radius: 40px;
+  padding: 40px 60px;
+  margin-bottom: 80px;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
 }
 
 .section-head {
   text-align: center;
-  margin-bottom: 70px;
+  margin-bottom: 40px;
 }
 
 .section-head h3 {
-  font-size: 32px;
+  font-size: 26px;
   font-weight: 900;
-  margin-bottom: 15px;
-  letter-spacing: -1.5px;
+  margin-bottom: 10px;
+  letter-spacing: -1px;
 }
 
 .section-head p {
@@ -487,11 +487,11 @@ body {
 
 .cat-tabs {
   display: flex;
-  gap: 20px;
+  gap: 15px;
   justify-content: center;
-  margin-bottom: 70px;
+  margin-bottom: 40px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  padding-bottom: 40px;
+  padding-bottom: 30px;
 }
 
 .cat-tabs button {
@@ -523,15 +523,15 @@ body {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 30px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
 }
 
 .item-card {
   background: #1a1a1c;
   border: 1px solid rgba(201, 206, 214, 0.3);
-  border-radius: 35px;
-  padding: 35px;
+  border-radius: 25px;
+  padding: 25px;
   transition: 0.4s;
   position: relative;
   overflow: hidden;
@@ -547,9 +547,9 @@ body {
 .card-top {
   display: flex;
   justify-content: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   position: relative;
-  height: 80px;
+  height: 60px;
   align-items: center;
 }
 
@@ -570,15 +570,15 @@ body {
 }
 
 .item-icon {
-  font-size: 46px;
+  font-size: 38px;
   filter: drop-shadow(0 15px 20px rgba(0, 0, 0, 0.4));
 }
 
 .item-info h4 {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 800;
   text-align: center;
-  margin: 0 0 30px;
+  margin: 0 0 20px;
 }
 
 .price-row {
@@ -590,7 +590,7 @@ body {
 }
 
 .price {
-  font-size: 22px;
+  font-size: 19px;
   font-weight: 900;
   color: #fff;
 }
@@ -599,13 +599,13 @@ body {
   background: var(--primary);
   border: none;
   color: #fff;
-  width: 45px;
-  height: 45px;
-  border-radius: 14px;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
   cursor: pointer;
   font-weight: 900;
   transition: 0.3s;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .buy-btn:hover {
