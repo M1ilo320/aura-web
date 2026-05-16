@@ -174,14 +174,14 @@ const ShopView = () => {
           </div>
           <div className="divider"></div>
           <div className="ticker-wrapper">
-            <div className="ticker-content">
+            <div className={`ticker-content ${recent && recent.length > 0 ? 'scrolling' : 'static'}`}>
               {recent && recent.length > 0 ? recent.map((r, i) => (
                 <div key={i} className="t-item">
                   <img src={r.avatar} alt="" />
                   <span className="t-name">{r.nickname}</span>
                   <span className="t-prod">{r.item_name}</span>
                 </div>
-              )) : <div className="t-item">Oczekiwanie na pierwsze zamówienia...</div>}
+              )) : <div className="t-item-placeholder">Oczekiwanie na pierwsze zamówienia...</div>}
             </div>
           </div>
         </div>
