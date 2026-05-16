@@ -556,13 +556,15 @@ body {
 .cat-tabs button {
   background: transparent;
   border: none;
-  color: #444;
+  color: #555;
   font-weight: 800;
-  font-size: 14px;
+  font-size: 13px;
   cursor: pointer;
-  padding: 10px 30px;
+  padding: 15px 40px;
   transition: 0.3s;
   position: relative;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .cat-tabs button.active {
@@ -572,12 +574,13 @@ body {
 .cat-tabs button.active::after {
   content: '';
   position: absolute;
-  bottom: -40px;
+  bottom: 0;
   left: 0;
-  right: 0;
+  width: 100%;
   height: 3px;
   background: var(--primary);
-  box-shadow: 0 0 25px var(--primary);
+  box-shadow: 0 0 15px var(--primary);
+  border-radius: 10px;
 }
 
 .grid {
@@ -587,10 +590,10 @@ body {
 }
 
 .item-card {
-  background: #1a1a1c;
-  border: 1px solid rgba(201, 206, 214, 0.3);
-  border-radius: 25px;
-  padding: 30px;
+  background: #161616;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 35px 25px;
   transition: 0.4s;
   position: relative;
   overflow: hidden;
@@ -601,18 +604,17 @@ body {
 }
 
 .item-card:hover {
-  border-color: var(--primary);
-  transform: translateY(-12px);
-  background: #1e1e21;
-  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+  border-color: rgba(var(--primary-rgb), 0.3);
+  transform: translateY(-5px);
+  background: #1a1a1c;
 }
 
 .card-top {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   position: relative;
-  height: 80px;
+  height: 90px;
   align-items: center;
 }
 
@@ -633,51 +635,63 @@ body {
 }
 
 .item-icon {
-  font-size: 50px;
+  font-size: 64px;
   filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.5));
+  z-index: 2;
+}
+
+.item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .item-info h4 {
-  font-size: 15px;
-  font-weight: 800;
-  text-align: center;
-  margin: 0 0 20px;
+  font-size: 14px;
+  font-weight: 900;
+  color: #fff;
+  margin: 0 0 15px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  line-height: 1.4;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
 }
 
 .price-row {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
-  padding-top: 25px;
-  width: 100%;
+  margin-top: 10px;
 }
 
 .price {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 900;
-  color: #fff;
+  color: var(--primary);
 }
 
 .buy-btn {
-  background: var(--primary);
-  border: none;
+  margin-top: 15px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   color: #fff;
-  width: 100%;
-  padding: 10px 0;
-  border-radius: 10px;
+  width: auto;
+  padding: 8px 25px;
+  border-radius: 8px;
   cursor: pointer;
-  font-weight: 900;
+  font-weight: 800;
   transition: 0.3s;
-  font-size: 13px;
+  font-size: 11px;
+  text-transform: uppercase;
 }
 
 .buy-btn:hover {
-  transform: scale(1.1) rotate(90deg);
-  filter: brightness(1.2);
+  background: var(--primary);
+  border-color: var(--primary);
+  transform: none;
 }
 
 .footer {
