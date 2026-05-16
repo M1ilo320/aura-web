@@ -126,10 +126,21 @@ const ShopView = () => {
     ? data.products
     : data.products.filter(p => (p.category?.toUpperCase() || 'INNE') === activeCategory);
 
+  const hexToRgb = (hex) => {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `${r}, ${g}, ${b}`;
+  };
+
   const { shop, recent, onlinePlayers } = data;
+  const primaryRgb = shop.accent_color ? hexToRgb(shop.accent_color) : '201, 206, 214';
 
   return (
-    <div className="app-wrapper">
+    <div className="app-wrapper" style={{ 
+      '--primary': shop.accent_color || '#C9CED6',
+      '--primary-rgb': primaryRgb
+    }}>
       <div className="mesh-gradient"></div>
 
       <nav className="top-nav">
@@ -141,7 +152,7 @@ const ShopView = () => {
           </div>
           <div className="nav-center">
             <div className="logo-img-wrap">
-              <img src="/aura_logo.png" alt="AURA" className="nav-logo-img" />
+              <img src={shop.logo_url || "/aura_logo.png"} alt={shop.name} className="nav-logo-img" />
             </div>
           </div>
           <div className="nav-right">
